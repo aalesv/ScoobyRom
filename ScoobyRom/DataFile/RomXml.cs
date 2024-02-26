@@ -248,9 +248,22 @@ namespace ScoobyRom.DataFile
 			// necessary, otherwise single line
 			xw.Formatting = Formatting.Indented;
 
-			var table2DXElements = list2D.Where (t => t.HasMetadata).OrderBy (t => t.Location).Select (t => GetXElement (t)).AsParallel ();
-			var table3DXElements = list3D.Where (t => t.HasMetadata).OrderBy (t => t.Location).Select (t => GetXElement (t)).AsParallel ();
-
+			var list2DSelected = list2D.Where(u => u.Selected);
+			//Save annotated tables and selected tables
+			var table2DXElements = list2D.Where (t => t.HasMetadata).
+									Union(list2DSelected).
+									OrderBy (t => t.Location).
+									Select (t => GetXElement (t)).
+									AsParallel ();
+			
+			var list3DSelected = list3D.Where(u => u.Selected);
+			//Save annotated tables and selected tables
+			var table3DXElements = list3D.Where (t => t.HasMetadata).
+									Union(list3DSelected).
+									OrderBy (t => t.Location).
+									Select (t => GetXElement (t)).
+									AsParallel ();
+			
 			XElement romEl = new XElement (X_rom, romMetadata.XElement, TableSearchXElement (), table2DXElements, table3DXElements);
 
 			XDocument doc = XDoc (romEl);
