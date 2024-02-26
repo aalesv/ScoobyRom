@@ -41,6 +41,7 @@ namespace ScoobyRom
 		Subaru.File.Rom rom;
 		DataFile.RomMetadata romMetadata = new DataFile.RomMetadata ();
 		string calIDfromRom;
+		string RomFileNameWithPath;
 
 		// proper values can speed up searching a lot - e.g. 300 ms instead of several seconds
 		Util.Range? tableSearchRange;
@@ -51,7 +52,9 @@ namespace ScoobyRom
 		// System.Collections.ObjectModel
 		//ObservableCollection<Table3D> coll3D = new ObservableCollection<Table3D>();
 
-
+		public string FileName {
+			get { return this.RomFileNameWithPath; }
+		}
 		public IList<Table2D> List2D {
 			get { return this.list2D; }
 		}
@@ -179,6 +182,8 @@ namespace ScoobyRom
 
 			rom.ProgressChanged -= OnProgressChanged;
 
+			RomFileNameWithPath = path;
+			
 			romLoaded = true;
 
 			if (romXml != null) {

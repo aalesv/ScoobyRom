@@ -306,7 +306,9 @@ public partial class MainWindow : Gtk.Window
 
 	void SetWindowTitle ()
 	{
-		this.Title = data.RomLoaded ? string.Format ("{0} - {1}", MainClass.AppName, data.CalID) : MainClass.AppName;
+		this.Title = data.RomLoaded ?
+			string.Format ("{0} - {1} - {2}", MainClass.AppName, data.CalID, data.FileName) 
+			: MainClass.AppName;
 	}
 
 	void ClearVisualizations ()
