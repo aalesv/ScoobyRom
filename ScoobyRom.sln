@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoobyRom", "ScoobyRom\ScoobyRom.csproj", "{665B6941-8FFB-44F9-BA68-0E35B7445A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibScoobyRom", "LibScoobyRom\LibScoobyRom.csproj", "{FA950E69-7715-4732-AAF2-DB1D56816858}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F627BD60-497D-4BDE-B0BE-F5BB0B234368}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{665B6941-8FFB-44F9-BA68-0E35B7445A92}.Debug|x86.ActiveCfg = Debug|x86
+		{665B6941-8FFB-44F9-BA68-0E35B7445A92}.Debug|x86.Build.0 = Debug|x86
+		{665B6941-8FFB-44F9-BA68-0E35B7445A92}.Release|x86.ActiveCfg = Release|x86
+		{665B6941-8FFB-44F9-BA68-0E35B7445A92}.Release|x86.Build.0 = Release|x86
+		{FA950E69-7715-4732-AAF2-DB1D56816858}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FA950E69-7715-4732-AAF2-DB1D56816858}.Debug|x86.Build.0 = Debug|Any CPU
+		{FA950E69-7715-4732-AAF2-DB1D56816858}.Release|x86.ActiveCfg = Release|Any CPU
+		{FA950E69-7715-4732-AAF2-DB1D56816858}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 0.8.3
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=ScoobyRom
+Terminal=false
+Exec=mono ScoobyRom.exe %F
+Comment=Car control unit firmware (ROM) analysis and visualization tool, working for some Denso ROM types.
+Categories=DataVisualization;Education;
+Icon=scoobyrom

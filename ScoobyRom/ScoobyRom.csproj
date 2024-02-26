@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{665B6941-8FFB-44F9-BA68-0E35B7445A92}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ScoobyRom</RootNamespace>
+    <AssemblyName>ScoobyRom</AssemblyName>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <ReleaseVersion>0.8.3</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyOriginatorKeyFile>keypair.snk</AssemblyOriginatorKeyFile>
+    <PlatformTarget>x86</PlatformTarget>
+    <Commandlineparameters>defaultRom.rom</Commandlineparameters>
+    <LangVersion>3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG</DefineConstants>
+    <LangVersion>3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <Commandlineparameters>defaultRom.rom</Commandlineparameters>
+    <LangVersion>3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+    </Reference>
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+    </Reference>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Drawing">
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+    </Reference>
+    <Reference Include="System.Xml">
+    </Reference>
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Configuration">
+    </Reference>
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Florence">
+      <HintPath>vendor\Florence.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\AppIcon.png">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+      <LogicalName>Images.AppIcon.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="gtk-gui\MainWindow.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="GtkWidgets\BorderWidget.cs" />
+    <Compile Include="UIGtk\ColumnNr3D.cs" />
+    <Compile Include="Data.cs" />
+    <Compile Include="DataFile\RomXml.cs" />
+    <Compile Include="DataFile\RomRaiderEcuDefXml.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="DataFile\RomMetadata.cs" />
+    <Compile Include="gtk-gui\ScoobyRom.ChecksumWindow.cs" />
+    <Compile Include="UIGtk\ChecksumWindow.cs" />
+    <Compile Include="UIGtk\DataView2DModelGtk.cs" />
+    <Compile Include="UIGtk\DataView3DGtk.cs" />
+    <Compile Include="UIGtk\ColumnNr2D.cs" />
+    <Compile Include="UIGtk\DataView3DModelGtk.cs" />
+    <Compile Include="UIGtk\DataView2DGtk.cs" />
+    <Compile Include="UIGtk\DataViewBaseGtk.cs" />
+    <Compile Include="UIGtk\ActionEventArgs.cs" />
+    <Compile Include="Plot\PlotIcon2D.cs" />
+    <Compile Include="Plot\PlotIcon3D.cs" />
+    <Compile Include="Plot\Plot2D.cs" />
+    <Compile Include="Plot\Plot3D.cs" />
+    <Compile Include="Plot\GnuPlot.cs" />
+    <Compile Include="Plot\GnuPlotExceptions.cs" />
+    <Compile Include="Plot\PlotIconBase.cs" />
+    <Compile Include="UIGtk\DataViewModelBaseGtk.cs" />
+    <Compile Include="GtkWidgets\TableWidget2D.cs" />
+    <Compile Include="Util\Coloring.cs" />
+    <Compile Include="Util\Markup.cs" />
+    <Compile Include="GtkWidgets\TableWidget3D.cs" />
+    <Compile Include="GtkWidgets\PlotWidget.cs" />
+    <Compile Include="Plot\FlorenceUtil.cs" />
+    <Compile Include="Plot\RectSizing.cs" />
+    <Compile Include="GtkWidgets\TableWidgetBase.cs" />
+    <Compile Include="GtkWidgets\NavBarWidget.cs" />
+    <Compile Include="Util\Region.cs" />
+    <Compile Include="Util\RegionType.cs" />
+    <Compile Include="UIGtk\PropertiesWindow.cs" />
+    <Compile Include="gtk-gui\ScoobyRom.PropertiesWindow.cs" />
+    <Compile Include="Util\Misc.cs" />
+    <Compile Include="UIGtk\SelectDataDialog.cs" />
+    <Compile Include="gtk-gui\ScoobyRom.SelectDataDialog.cs" />
+    <Compile Include="UIGtk\SelectedChoice.cs" />
+    <Compile Include="DataFile\TunerProXdf.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Content Include="ScoobyRom.desktop">
+      <DeployService-TargetDirectoryId>Linux.DesktopApplications</DeployService-TargetDirectoryId>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gnuplot_Table2D.plt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="gnuplot_Table3D.plt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="COPYING.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GtkWidgets\" />
+    <Folder Include="UIGtk\" />
+    <Folder Include="DataFile\" />
+    <Folder Include="Plot\" />
+    <Folder Include="vendor\" />
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
+    <None Include="Images\AppIcon.svg">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
+    <None Include="vendor\NPlot.dll">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
+    <None Include="TODO.md" />
+    <None Include="DEVELOPMENT.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibScoobyRom\LibScoobyRom.csproj">
+      <Project>{FA950E69-7715-4732-AAF2-DB1D56816858}</Project>
+      <Name>LibScoobyRom</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <GtkDesignInfo generateGettext="False" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
