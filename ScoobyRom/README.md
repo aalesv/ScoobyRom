@@ -697,7 +697,7 @@ Recommended full featured editor, uses SVG format natively:
 
 ### <a name="other_export"></a> 5.6) Other export formats
 
-Not implemented yet.
+Export to comma-separated values table is supported.
 
 gnuplot also supports many other export formats like PDF, EPS, PNG and so on.
 Would be easy to add support in the same way as SVG.

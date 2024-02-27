@@ -212,6 +212,16 @@ namespace ScoobyRom
 			romXml.WriteXml (path, romMetadata, list2D, list3D);
 		}
 
+		public void SaveCsv ()
+		{
+			SaveCsv (PathWithNewExtension (rom.Path, ".xml"));
+		}
+
+		public void SaveCsv (string path)
+		{
+			DataFile.TextEcuDef.WriteCsvFile (path, romMetadata, list2D, list3D);
+		}
+
 		void GetChosenTables (SelectedChoice choice, out IList<Table2D> list2D, out IList<Table3D> list3D)
 		{
 			list2D = null;
@@ -250,6 +260,11 @@ namespace ScoobyRom
 
 			var categories = GetCategoriesDictionary (GetCategoriesForExport (list2D, list3D));
 			DataFile.TunerProXdf.WriteXdfFile (path, romMetadata, categories, list2D, list3D);
+		}
+
+		public void SaveAsCsv (string path)
+		{
+			DataFile.TextEcuDef.WriteCsvFile(path, romMetadata, list2D, list3D);
 		}
 
 		public void ChangeTableType (Table table, Tables.TableType newType)

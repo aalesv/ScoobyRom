@@ -211,6 +211,14 @@
         <property name="StockId">gtk-save-as</property>
         <signal name="Activated" handler="OnExportAsXDFActionActivated" />
       </action>
+      <action id="exportAsCSVAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Comma-Separated Values (CSV)</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_CSV file</property>
+        <property name="StockId">gtk-save-as</property>
+        <signal name="Activated" handler="OnexportAsCSVActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">ScoobyRom</property>

@@ -580,6 +580,37 @@ public partial class MainWindow : Gtk.Window
 		}
 	}
 
+	void OnExportAsCSVActionActivated (object sender, EventArgs e)
+	{
+		string pathSuggested = ScoobyRom.Data.PathWithNewExtension (data.Rom.Path, ".csv");
+		var fc = new Gtk.FileChooserDialog ("Export as CSV file", this,
+			         FileChooserAction.Save, Gtk.Stock.Cancel, ResponseType.Cancel, Gtk.Stock.Save, ResponseType.Accept);
+		try {
+			FileFilter filter = new FileFilter ();
+			filter.Name = "CSV files";
+			filter.AddPattern ("*.csv");
+			fc.AddFilter (filter);
+
+			filter = new FileFilter ();
+			filter.Name = "All files";
+			filter.AddPattern ("*");
+			fc.AddFilter (filter);
+
+			fc.DoOverwriteConfirmation = true;
+			fc.SetFilename (pathSuggested);
+			fc.CurrentName = System.IO.Path.GetFileName (pathSuggested);
+
+			if (fc.Run () == (int)ResponseType.Accept) {
+				data.SaveAsCsv (fc.Filename);
+			}
+		} catch (Exception ex) {
+			ErrorMsg ("Error writing file", ex.Message);
+		} finally {
+			if (fc != null)
+				fc.Destroy ();
+		}
+	}
+
 	// closing main app window
 	void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
@@ -812,6 +843,7 @@ public partial class MainWindow : Gtk.Window
 		exportAsAction.Sensitive = sensitive;
 		exportAsRRAction.Sensitive = sensitive;
 		exportAsXDFAction.Sensitive = sensitive;
+		exportAsCSVAction.Sensitive = sensitive;
 
 		visualisationAction.Sensitive = sensitive;
 
