@@ -28,6 +28,7 @@ using Tables;
 using Tables.Denso;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
 namespace ScoobyRom.DataFile
 {
@@ -68,28 +69,33 @@ namespace ScoobyRom.DataFile
 			StringBuilder outCsv = new StringBuilder();
 			var csvSeparator = ",";
 			outCsv.AppendLine(string.Join(csvSeparator, csvHeader));
+
+			NumberFormatInfo nfi = new NumberFormatInfo();
+			//Force '.' to be decimal separator
+			nfi.NumberDecimalSeparator = ".";
+
 			foreach (var t in list2D)
 			{
 				var multiplier =	float.IsNaN(t.Multiplier) 	? 0 : t.Multiplier;
 				var offset = 		float.IsNaN(t.Offset) 		? 0 : t.Offset;
 				outCsv.AppendLine(string.Join(csvSeparator,
-												"table2D",		//table_type
-												t.Category,		//category
-												t.Location,		//storageaddress
-												t.UnitX,		//unit_x
-												t.NameX,		//name_x
-												"",				//unit_y
-												"",				//name_y
-												t.UnitY,		//unit_z
-												t.CountX,		//x_len
-												"0",			//y_len
-												t.TableType,	//data_type
-												t.RangeX.Pos,	//axis_x_storageaddress
-												"0",			//axis_y_storageaddress
-												t.RangeY.Pos,	//axis_z_storageaddress
-												multiplier,		//multiplier
-												offset,			//offset
-												t.Title			//name
+												"table2D",				//table_type
+												t.Category,				//category
+												t.Location,				//storageaddress
+												t.UnitX,				//unit_x
+												t.NameX,				//name_x
+												"",						//unit_y
+												"",						//name_y
+												t.UnitY,				//unit_z
+												t.CountX,				//x_len
+												"0",					//y_len
+												t.TableType,			//data_type
+												t.RangeX.Pos,			//axis_x_storageaddress
+												"0",					//axis_y_storageaddress
+												t.RangeY.Pos,			//axis_z_storageaddress
+												multiplier.ToString(nfi),//multiplier
+												offset.ToString(nfi),	//offset
+												t.Title					//name
 												));
 			}
 
@@ -98,23 +104,23 @@ namespace ScoobyRom.DataFile
 				var multiplier =	float.IsNaN(t.Multiplier) 	? 0 : t.Multiplier;
 				var offset = 		float.IsNaN(t.Offset) 		? 0 : t.Offset;
 				outCsv.AppendLine(string.Join(csvSeparator,
-												"table3D",		//table_type
-												t.Category,		//category
-												t.Location,		//storageaddress
-												t.UnitX,		//unit_x
-												t.NameX,		//name_x
-												t.UnitY,		//unit_y
-												t.NameY,		//name_y
-												t.UnitZ,		//unit_z
-												t.CountX,		//x_len
-												t.CountY,		//y_len
-												t.TableType,	//data_type
-												t.RangeX.Pos,	//axis_x_storageaddress
-												t.RangeY.Pos,	//axis_y_storageaddress
-												t.RangeZ.Pos,	//axis_z_storageaddress
-												multiplier,		//multiplier
-												offset,			//offset
-												t.Title			//name
+												"table3D",				//table_type
+												t.Category,				//category
+												t.Location,				//storageaddress
+												t.UnitX,				//unit_x
+												t.NameX,				//name_x
+												t.UnitY,				//unit_y
+												t.NameY,				//name_y
+												t.UnitZ,				//unit_z
+												t.CountX,				//x_len
+												t.CountY,				//y_len
+												t.TableType,			//data_type
+												t.RangeX.Pos,			//axis_x_storageaddress
+												t.RangeY.Pos,			//axis_y_storageaddress
+												t.RangeZ.Pos,			//axis_z_storageaddress
+												multiplier.ToString(nfi),//multiplier
+												offset.ToString(nfi),	//offset
+												t.Title					//name
 												));
 			}
 			File.WriteAllText(path, outCsv.ToString());
