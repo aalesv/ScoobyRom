@@ -41,8 +41,8 @@ namespace ScoobyRom.DataFile
             
             //Export all tables with metadata and all selected tables
             WriteCsvFile(path,
-				list2D.Where(t => t.HasMetadata).Union(list2DSelected),
-				list3D.Where(t => t.HasMetadata).Union(list3DSelected));
+				list2D.Where(t => t.HasMetadata).Union(list2DSelected).OrderBy (t => t.Location),
+				list3D.Where(t => t.HasMetadata).Union(list3DSelected).OrderBy (t => t.Location));
 
         }
 
@@ -57,7 +57,11 @@ namespace ScoobyRom.DataFile
 									"name_y",
 									"unit_z",
 									"x_len",
+									"x_min",
+									"x_max",
 									"y_len",
+									"y_min",
+									"y_max",
 									"data_type",
 									"axis_x_storageaddress",
 									"axis_y_storageaddress",
@@ -88,7 +92,11 @@ namespace ScoobyRom.DataFile
 												"",						//name_y
 												t.UnitY,				//unit_z
 												t.CountX,				//x_len
+												t.Xmin.ToString(nfi),	//x_min
+												t.Xmax.ToString(nfi),	//x_max
 												"0",					//y_len
+												"0",					//y_min
+												"0",					//y_max
 												t.TableType,			//data_type
 												t.RangeX.Pos,			//axis_x_storageaddress
 												"0",					//axis_y_storageaddress
@@ -113,7 +121,11 @@ namespace ScoobyRom.DataFile
 												t.NameY,				//name_y
 												t.UnitZ,				//unit_z
 												t.CountX,				//x_len
+												t.Xmin.ToString(nfi),	//x_min
+												t.Xmax.ToString(nfi),	//x_max
 												t.CountY,				//y_len
+												t.Ymin.ToString(nfi),	//y_min
+												t.Ymax.ToString(nfi),	//y_max
 												t.TableType,			//data_type
 												t.RangeX.Pos,			//axis_x_storageaddress
 												t.RangeY.Pos,			//axis_y_storageaddress
