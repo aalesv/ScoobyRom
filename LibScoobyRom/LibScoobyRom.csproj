@@ -10,7 +10,7 @@
     <RootNamespace>Subaru</RootNamespace>
     <AssemblyName>LibScoobyRom</AssemblyName>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ReleaseVersion>0.8.4</ReleaseVersion>
+    <ReleaseVersion>0.8.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
