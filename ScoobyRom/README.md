@@ -79,6 +79,7 @@ ROM types confirmed working:
 		*	*SH7055* (512 KiB)
 		*	*SH7058, SH7058S* (1.0 MiB)
 		*	*SH7059* (1.5 MiB)
+		*	*SH72531* (1.25 MiB)
 
 * *Transmission Control Unit* (TCU):
 	*	Automatic Transmission (*Subaru 5AT*) (*SH7058*, 1.0 MiB)
@@ -100,6 +101,10 @@ a)	*RomRaider ECU definition* format
 b)	*TunerPro XDF* format
 
 "TunerPro is a free, donate-if-you-like-it tuning platform aimed at making tuning easier and cheaper for the hobbyist and professional alike. It uses a versatile and extensible calibration definition format (XDF) that is user-defineable and is quite powerful."
+
+c) *CSV* plain-text format
+
+Comma-separated values (CSV) is a text file format that uses commas to separate values, and newlines to separate records. Each row contains a record about one table.
 
 <http://tunerpro.net/>
 
@@ -148,13 +153,16 @@ automatically launching independent external tool _gnuplot_, therefore *gnuplot*
 
 OPTIONAL.
 
-Project homepage on *GitHub*: [https://github.com/SubaruDieselCrew/ScoobyRom/][project homepage]
+Project homepage on *GitHub*: [https://github.com/aalesv/ScoobyRom][project homepage]
+
+Project homepage on *GitHub*, deprecated: [https://github.com/SubaruDieselCrew/ScoobyRom/][project homepage]
 
 #### Download
 * Advanced: Clone source repository, assuming [git](http://www.git-scm.com/) is installed:
 
-	`git clone https://github.com/SubaruDieselCrew/ScoobyRom.git`
+	`git clone https://github.com/aalesv/ScoobyRom`
 
+Or you can use a graphical git interface, for example [GitHub Desktop](https://desktop.github.com/)
 
 * Easy: Download sources (snapshot, no history) as ZIP archives download:
 
@@ -165,10 +173,14 @@ Project homepage on *GitHub*: [https://github.com/SubaruDieselCrew/ScoobyRom/][p
 	* Select desired *branch* and/or *tag* (top left).
 		* On the right pane click the "**Download ZIP**" button.
 
-[project homepage]: https://github.com/SubaruDieselCrew/ScoobyRom/
+[project homepage]: https://github.com/aalesv/ScoobyRom
+
+[project homepage, deprecated]: https://github.com/SubaruDieselCrew/ScoobyRom/
 
 #### Compilation
 For instructions and hints see file [DEVELOPMENT.md](DEVELOPMENT.md).
+
+If the environment is configured correctly, run `build.bat`.
 
 ---
 
