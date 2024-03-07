@@ -6,7 +6,9 @@
 
 *	ScoobyRom Homepage: <http://subdiesel.wordpress.com/ecu-analysis/scoobyrom-software/>
 
-*	Source code repository and downloads: <http://github.com/SubaruDieselCrew/ScoobyRom/>
+*	Source code repository and downloads: <https://github.com/aalesv/ScoobyRom/>
+
+*	Source code repository and downloads, deprecated: <http://github.com/SubaruDieselCrew/ScoobyRom/>
 
 # Quick Facts
 
@@ -44,6 +46,7 @@ ROM types confirmed working:
 		*	*SH7055* (512 KiB)
 		*	*SH7058, SH7058S* (1.0 MiB)
 		*	*SH7059* (1.5 MiB)
+		*	*SH72531* (1.25 MiB)
 
 * *Transmission Control Unit* (TCU):
 	*	Automatic Transmission (*Subaru 5AT*) (*SH7058*, 1.0 MiB)
@@ -67,6 +70,10 @@ b)	*TunerPro XDF* format
 "TunerPro is a free, donate-if-you-like-it tuning platform aimed at making tuning easier and cheaper for the hobbyist and professional alike. It uses a versatile and extensible calibration definition format (XDF) that is user-defineable and is quite powerful."
 
 <http://tunerpro.net/>
+
+c) *CSV* plain-text format
+
+Comma-separated values (CSV) is a text file format that uses commas to separate values, and newlines to separate records. Each row contains a record about one table.
 
 ---
 
