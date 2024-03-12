@@ -11,6 +11,7 @@
     <AssemblyName>ScoobyRom</AssemblyName>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <ReleaseVersion>0.8.5</ReleaseVersion>
+    <ApplicationIcon>Images\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
