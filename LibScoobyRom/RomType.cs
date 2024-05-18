@@ -44,6 +44,10 @@ namespace Subaru
 		/// <summary>
 		/// 2 MiB = 2048 KiB = 2097152 bytes
 		/// </summary>
-		SH72543R
+		SH72543R,
+		/// <summary>
+		/// 1.5 MiB = 1552 KiB = 1589248 bytes
+		/// </summary>
+		MPC5746_1552
 	}
 }

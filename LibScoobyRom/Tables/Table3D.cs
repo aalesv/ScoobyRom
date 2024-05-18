@@ -44,9 +44,9 @@ namespace Tables.Denso
 
 			s_tableInfo3D.countX = stream.ReadInt16BigEndian ();
 			s_tableInfo3D.countY = stream.ReadInt16BigEndian ();
-			s_tableInfo3D.rangeX.Pos = stream.ReadInt32BigEndian ();
-			s_tableInfo3D.rangeY.Pos = stream.ReadInt32BigEndian ();
-			s_tableInfo3D.rangeZ.Pos = stream.ReadInt32BigEndian ();
+			s_tableInfo3D.rangeX.Pos = stream.ReadInt32BigEndian () - TableAddressOffset;
+			s_tableInfo3D.rangeY.Pos = stream.ReadInt32BigEndian () - TableAddressOffset;
+			s_tableInfo3D.rangeZ.Pos = stream.ReadInt32BigEndian () - TableAddressOffset;
 			// first byte matters, rest probably just alignment (zeroes), read all four in one go by little endian
 			s_tableInfo3D.tableType = (TableType)(stream.ReadInt32LittleEndian ());
 			// 20 bytes read so far

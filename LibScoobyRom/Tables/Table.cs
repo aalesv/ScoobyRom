@@ -82,6 +82,14 @@ namespace Tables.Denso
 
 		public static string endian = "big";
 
+		//Some ROMs load not at 0x0, this offset must be compensated
+		static protected int tableAddressOffset = 0;
+
+		public static int TableAddressOffset {
+			get { return tableAddressOffset; }
+			set { tableAddressOffset = value; }
+		}
+
 		#region Fields
 
 		protected int countX;

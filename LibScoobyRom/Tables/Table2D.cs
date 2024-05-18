@@ -46,8 +46,8 @@ namespace Tables.Denso
 			// By reading as little endian word we read and verify all two bytes in one go.
 			s_tableInfo2D.tableType = (TableType)stream.ReadInt16LittleEndian ();
 
-			s_tableInfo2D.rangeX.Pos = stream.ReadInt32BigEndian ();
-			s_tableInfo2D.rangeY.Pos = stream.ReadInt32BigEndian ();
+			s_tableInfo2D.rangeX.Pos = stream.ReadInt32BigEndian () - TableAddressOffset;
+			s_tableInfo2D.rangeY.Pos = stream.ReadInt32BigEndian () - TableAddressOffset;
 
 			// most but not all non-float tables have MAC floats:
 			s_tableInfo2D.multiplier = stream.ReadSingleBigEndian ();
