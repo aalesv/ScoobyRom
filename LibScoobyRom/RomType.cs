@@ -48,6 +48,10 @@ namespace Subaru
 		/// <summary>
 		/// 1.5 MiB = 1552 KiB = 1589248 bytes
 		/// </summary>
-		MPC5746_1552
+		MPC5746_1552,
+		/// <summary>
+		/// 4 MiB = 3984 KiB = 4079616 bytes
+		/// </summary>
+		MPC5746_3984
 	}
 }

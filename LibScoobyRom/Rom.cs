@@ -97,6 +97,7 @@ namespace Subaru.File
 		{
 			switch (this.romType){
 			case RomType.MPC5746_1552:
+			case RomType.MPC5746_3984:
 				return 0x8F9C000;
 			default:
 				return 0;
@@ -370,6 +371,7 @@ namespace Subaru.File
 			// 0x8000 = 32 KiB
 			const int Pos_SH72543R_Diesel = 0x8000;
 			const int Pos_MPC5746_1552 = 0x16040;
+			const int Pos_MPC5746_3984 = 0x1C040;
 
 			const int RomIDlongLength = 32;
 			const int CIDLength = 8;
@@ -384,6 +386,9 @@ namespace Subaru.File
 				break;
 			case RomType.MPC5746_1552:
 				pos = Pos_MPC5746_1552;
+				break;
+			case RomType.MPC5746_3984:
+				pos = Pos_MPC5746_3984;
 				break;
 			default:
 				Console.WriteLine ("Unknown RomType");
@@ -494,6 +499,8 @@ namespace Subaru.File
 					return RomType.SH72543R;
 				case (1024 + 512 + 16) * KiB:
 					return RomType.MPC5746_1552;
+				case (4000 - 16) * KiB:
+					return RomType.MPC5746_3984;
 				default:
 					return RomType.Unknown;
 				}
