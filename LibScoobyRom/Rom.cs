@@ -105,6 +105,17 @@ namespace Subaru.File
 
 		}
 
+		public bool Has1x1Tables3D()
+		{
+			switch (this.romType){
+			case RomType.MPC5746_1552:
+			case RomType.MPC5746_3984:
+				return true;
+			default:
+				return false;
+			}
+		}
+
 		void Open ()
 		{
 			const int BufferSize = 16 * KiB;
@@ -123,6 +134,9 @@ namespace Subaru.File
 
 			this.romType = DetectRomType (stream);
 			Table.TableAddressOffset = this.RomLoadAddress();
+			Table3D.Allowed1x1Table = this.Has1x1Tables3D();
+			if (this.Has1x1Tables3D())
+				Table2D.CountXMin = 1;
 		}
 
 		/// <summary>

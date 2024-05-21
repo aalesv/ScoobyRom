@@ -10,7 +10,7 @@
     <RootNamespace>ScoobyRom</RootNamespace>
     <AssemblyName>ScoobyRom</AssemblyName>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ReleaseVersion>0.9.1</ReleaseVersion>
+    <ReleaseVersion>0.9.2</ReleaseVersion>
     <ApplicationIcon>Images\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

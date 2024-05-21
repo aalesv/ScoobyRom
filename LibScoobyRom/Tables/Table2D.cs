@@ -30,6 +30,13 @@ namespace Tables.Denso
 	// 12 bytes without the two MAC floats
 	public sealed class Table2D : Table
 	{
+		static protected int countXMin = CountMin;
+
+		public static int CountXMin {
+			get { return countXMin; }
+			set { countXMin = value; }
+		}
+
 		// Temporary singleton for slightly better parsing performance. Not thread-safe!
 		static readonly Table2D s_tableInfo2D = new Table2D ();
 
@@ -170,7 +177,7 @@ namespace Tables.Denso
 		public override bool IsRecordValid ()
 		{
 			int count = this.countX;
-			if (count > CountMax || count < CountMin)
+			if (count > CountMax || count < CountXMin)
 				return false;
 
 			if (!tableType.IsValid ())

@@ -34,6 +34,14 @@ namespace Tables.Denso
 		const int CountXMax = CountMax;
 		const int CountYMax = CountMax;
 
+		//Is 1x1 table valid. Usually no.
+		static protected bool allowed1x1Table = false;
+
+		public static bool Allowed1x1Table {
+			get { return allowed1x1Table; }
+			set { allowed1x1Table = value; }
+		}
+
 		// Temporary singleton for slightly better parsing performance. Not thread-safe!
 		static readonly Table3D s_tableInfo3D = new Table3D ();
 
@@ -251,8 +259,29 @@ namespace Tables.Denso
 
 		public override bool IsRecordValid ()
 		{
-			if (countX > CountMax || countX < CountMin || countY > CountMax || countY < CountMin)
+			bool is1x1Table = (CountX == 1) && (CountY == 1);
+			bool isVerySmall = countX < CountMin || countY < CountMin;
+
+			if (Allowed1x1Table)
+			{
+				if (isVerySmall && ! is1x1Table)
+				{
+					return false;
+				}
+			}
+			else 
+			{
+				if (isVerySmall)
+				{
+					return false;
+				}
+			}
+			
+			if (countX > CountXMax || countY > CountYMax)
 				return false;
+			
+			//if (countX > CountXMax || countX < CountMin || countY > CountYMax || countY < CountMin)
+			//	return false;
 
 			if (!tableType.IsValid ())
 				return false;
