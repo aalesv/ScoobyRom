@@ -169,6 +169,8 @@ namespace ScoobyRom
 			}
 
 			romMetadata.Filesize = rom.Size;
+			if (rom.RomType != Subaru.RomType.Unknown)
+				romMetadata.Memmodel = rom.RomType.ToString();
 			int calIDpos = romMetadata.CalibrationIDPos;
 
 			calIDfromRom = calIDpos != 0 ? rom.ReadASCII (calIDpos, 8) : "Unknown";
