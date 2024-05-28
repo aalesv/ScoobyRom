@@ -149,6 +149,8 @@ namespace ScoobyRom
 			romLoaded = false;
 			rom = new Subaru.File.Rom (path);
 
+			rom.DisplayTablePosWithOffset = Config.DisplayTablePosWithOffset;
+
 			rom.FindMetadata ();
 
 			string xmlPath = PathWithNewExtension (path, ".xml");

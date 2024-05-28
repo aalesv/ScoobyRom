@@ -47,6 +47,16 @@ namespace Subaru.File
 		int? reflashCount;
 		RomRaiderEditStamp.RomRaiderEditStampData? romRaiderEditStampData;
 
+		protected bool displayTablePosWithOffset = true;
+
+		public bool DisplayTablePosWithOffset {
+			get { return displayTablePosWithOffset; }
+			set {
+					displayTablePosWithOffset = value;
+					Table.DisplayTablePosWithOffset = value;
+				}
+		}
+
 		public string Path {
 			get { return this.path; }
 		}
@@ -91,6 +101,10 @@ namespace Subaru.File
 		{
 			this.path = path;
 			Open ();
+			Table.TableAddressOffset = this.RomLoadAddress();
+			Table3D.Allowed1x1Table = this.Has1x1Tables3D();
+			if (this.Has1x1Tables3D())
+				Table2D.CountXMin = 1;
 		}
 
 		public int RomLoadAddress()
@@ -138,10 +152,6 @@ namespace Subaru.File
 			this.stream = new MemoryStream (buffer, 0, length, false, true);
 
 			this.romType = DetectRomType (stream);
-			Table.TableAddressOffset = this.RomLoadAddress();
-			Table3D.Allowed1x1Table = this.Has1x1Tables3D();
-			if (this.Has1x1Tables3D())
-				Table2D.CountXMin = 1;
 		}
 
 		/// <summary>

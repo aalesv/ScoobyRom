@@ -34,6 +34,7 @@ namespace ScoobyRom
 		const string key_IconWidthStr = "iconWidth";
 		const string key_IconHeightStr = "iconHeight";
 		const string key_iconsOnByDefault = "iconsOnByDefault";
+		const string key_displayTablePosWithOffset = "displayTablePosWithOffset";
 
 		// works on Linux at least
 		const string gnuplotDefaultPath_Other = "gnuplot";
@@ -45,6 +46,13 @@ namespace ScoobyRom
 		static bool iconsOnByDefault;
 		static int iconWidth = DefaultIconWidth;
 		static int iconHeight = DefaultIconHeight;
+
+		static bool displayTablePosWithOffset = true;
+
+		public static bool DisplayTablePosWithOffset {
+			get { return displayTablePosWithOffset; }
+			set { displayTablePosWithOffset = value; }
+		}
 
 		/// <summary>
 		/// Null if key not found!
@@ -105,7 +113,11 @@ namespace ScoobyRom
 			if (val != null && int.TryParse (val, out intValue)) {
 				iconHeight = ValueInRange (intValue, IconMin, IconMax);
 			}
-		}
+
+			val = appSettings [key_displayTablePosWithOffset];
+			if (val != null)
+				bool.TryParse (val, out displayTablePosWithOffset);
+}
 
 		static int ValueInRange (int value, int min, int max)
 		{

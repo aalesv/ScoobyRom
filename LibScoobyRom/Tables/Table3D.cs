@@ -100,6 +100,14 @@ namespace Tables.Denso
 		float[] valuesZasFloats;
 		float valuesZmin, valuesZmax, valuesZavg;
 
+		public int RangeZPosCorrected {
+			get {
+				int offset = displayTablePosWithOffset ?
+							TableAddressOffset : 0;
+				return rangeZ.Pos + offset;
+			}
+		}
+
 		// metadata
 		string nameY, unitZ;
 

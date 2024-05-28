@@ -90,6 +90,13 @@ namespace Tables.Denso
 			set { tableAddressOffset = value; }
 		}
 
+		static protected bool displayTablePosWithOffset = true;
+
+		public static bool DisplayTablePosWithOffset {
+			get { return displayTablePosWithOffset; }
+			set { displayTablePosWithOffset = value; }
+		}
+
 		#region Fields
 
 		protected int countX;
@@ -115,6 +122,13 @@ namespace Tables.Denso
 		public int Location {
 			get { return location; }
 			set { location = value; }
+		}
+
+		public int LocationCorrected {
+			get{
+				int offset = displayTablePosWithOffset ?
+							TableAddressOffset : 0;
+				return location + offset;}
 		}
 
 		/// <summary>
@@ -175,6 +189,22 @@ namespace Tables.Denso
 		public Range RangeX {
 			get { return rangeX; }
 			set { rangeX = value; }
+		}
+
+		public int RangeXPosCorrected {
+			get {
+				int offset = displayTablePosWithOffset ?
+							TableAddressOffset : 0;
+				return rangeX.Pos + offset;
+			}
+		}
+
+		public int RangeYPosCorrected {
+			get {
+				int offset = displayTablePosWithOffset ?
+							TableAddressOffset : 0;
+				return rangeY.Pos + offset;
+			}
 		}
 
 		public Range RangeY {
