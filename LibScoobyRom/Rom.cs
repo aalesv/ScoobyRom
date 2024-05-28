@@ -95,7 +95,12 @@ namespace Subaru.File
 
 		public int RomLoadAddress()
 		{
-			switch (this.romType){
+			return RomLoadAddress(this.romType);
+		}
+
+		static public int RomLoadAddress(RomType romType)
+		{
+			switch (romType){
 			case RomType.MPC5746_1552:
 			case RomType.MPC5746_3984:
 				return 0x8F9C000;

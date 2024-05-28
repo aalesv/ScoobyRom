@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Extensions;
+using Subaru.File;
 
 namespace Subaru
 {
@@ -35,10 +36,12 @@ namespace Subaru
 		int tablePos;
 		System.IO.Stream stream;
 		List<RomChecksumRecord> checksumRecords;
+		RomType romType;
 
 
 		public RomChecksumming (RomType romType, System.IO.Stream stream) : this (GetTablePos (romType), stream)
 		{
+			this.romType = romType;
 		}
 
 		public RomChecksumming (int tablePos, System.IO.Stream stream)
@@ -60,6 +63,10 @@ namespace Subaru
 				return 0x13F500;
 			case RomType.SH72543R:
 				return 0x1FF800;
+			case RomType.MPC5746_1552:
+				return 0x183E00;
+			case RomType.MPC5746_3984:
+				return 0x3E3E00;
 			default:
 				return -1;
 			}
@@ -79,9 +86,13 @@ namespace Subaru
 		{
 			List<RomChecksumRecord> records = new List<RomChecksumRecord> (count);
 
+			int offset = Rom.RomLoadAddress(this.romType);
 			stream.Seek (tablePos, System.IO.SeekOrigin.Begin);
 			for (int i = 0; i < count; i++) {
-				RomChecksumRecord record = new RomChecksumRecord (stream.ReadInt32BigEndian (), stream.ReadInt32BigEndian (), stream.ReadInt32BigEndian ());
+				int start 	 = stream.ReadInt32BigEndian () - offset,
+					end		 = stream.ReadInt32BigEndian () - offset,
+					checkSum = stream.ReadInt32BigEndian ();
+				RomChecksumRecord record = new RomChecksumRecord (start, end, checkSum);
 				records.Add (record);
 			}
 			this.checksumRecords = records;
