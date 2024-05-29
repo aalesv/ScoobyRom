@@ -78,6 +78,7 @@ namespace ScoobyRom.DataFile
 			//Force '.' to be decimal separator
 			nfi.NumberDecimalSeparator = ".";
 
+			bool d = Config.ExportToCsvWithOffset;
 			foreach (var t in list2D)
 			{
 				var multiplier =	float.IsNaN(t.Multiplier) 	? 0 : t.Multiplier;
@@ -85,7 +86,7 @@ namespace ScoobyRom.DataFile
 				outCsv.AppendLine(string.Join(csvSeparator,
 												"table2D",				//table_type
 												t.Category,				//category
-												t.Location,				//storageaddress
+												t.LocationCorrected(d),	//storageaddress
 												t.UnitX,				//unit_x
 												t.NameX,				//name_x
 												"",						//unit_y
@@ -98,9 +99,9 @@ namespace ScoobyRom.DataFile
 												"0",					//y_min
 												"0",					//y_max
 												t.TableType,			//data_type
-												t.RangeX.Pos,			//axis_x_storageaddress
+												t.RangeX.PosCorrected(d),//axis_x_storageaddress
 												"0",					//axis_y_storageaddress
-												t.RangeY.Pos,			//axis_z_storageaddress
+												t.RangeY.PosCorrected(d),//axis_z_storageaddress
 												multiplier.ToString(nfi),//multiplier
 												offset.ToString(nfi),	//offset
 												t.Title					//name
@@ -114,7 +115,7 @@ namespace ScoobyRom.DataFile
 				outCsv.AppendLine(string.Join(csvSeparator,
 												"table3D",				//table_type
 												t.Category,				//category
-												t.Location,				//storageaddress
+												t.LocationCorrected(d),	//storageaddress
 												t.UnitX,				//unit_x
 												t.NameX,				//name_x
 												t.UnitY,				//unit_y
@@ -127,9 +128,9 @@ namespace ScoobyRom.DataFile
 												t.Ymin.ToString(nfi),	//y_min
 												t.Ymax.ToString(nfi),	//y_max
 												t.TableType,			//data_type
-												t.RangeX.Pos,			//axis_x_storageaddress
-												t.RangeY.Pos,			//axis_y_storageaddress
-												t.RangeZ.Pos,			//axis_z_storageaddress
+												t.RangeX.PosCorrected(d),//axis_x_storageaddress
+												t.RangeY.PosCorrected(d),//axis_y_storageaddress
+												t.RangeZ.PosCorrected(d),//axis_z_storageaddress
 												multiplier.ToString(nfi),//multiplier
 												offset.ToString(nfi),	//offset
 												t.Title					//name
