@@ -35,6 +35,7 @@ namespace ScoobyRom
 		const string key_IconHeightStr = "iconHeight";
 		const string key_iconsOnByDefault = "iconsOnByDefault";
 		const string key_displayTablePosWithOffset = "displayTablePosWithOffset";
+		const string key_exportToCsvWithOffset = "exportToCsvWithOffset";
 
 		// works on Linux at least
 		const string gnuplotDefaultPath_Other = "gnuplot";
@@ -52,6 +53,13 @@ namespace ScoobyRom
 		public static bool DisplayTablePosWithOffset {
 			get { return displayTablePosWithOffset; }
 			set { displayTablePosWithOffset = value; }
+		}
+
+		static bool exportToCsvWithOffset = true;
+
+		public static bool ExportToCsvWithOffset {
+			get { return exportToCsvWithOffset; }
+			set { exportToCsvWithOffset = value; }
 		}
 
 		/// <summary>
@@ -117,7 +125,11 @@ namespace ScoobyRom
 			val = appSettings [key_displayTablePosWithOffset];
 			if (val != null)
 				bool.TryParse (val, out displayTablePosWithOffset);
-}
+			
+			val = appSettings [key_exportToCsvWithOffset];
+			if (val != null)
+				bool.TryParse (val, out exportToCsvWithOffset);
+		}
 
 		static int ValueInRange (int value, int min, int max)
 		{
