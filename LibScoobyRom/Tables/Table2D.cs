@@ -30,7 +30,7 @@ namespace Tables.Denso
 	// 12 bytes without the two MAC floats
 	public sealed class Table2D : Table
 	{
-		static protected int countXMin = CountMin;
+		static private int countXMin = CountMin;
 
 		public static int CountXMin {
 			get { return countXMin; }

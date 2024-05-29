@@ -44,7 +44,7 @@ namespace ScoobyRom
 		string RomFileNameWithPath;
 
 		// proper values can speed up searching a lot - e.g. 300 ms instead of several seconds
-		Util.Range? tableSearchRange;
+		Tables.Denso.Table.Range? tableSearchRange;
 
 		IList<Table2D> list2D = new List<Table2D> (0);
 		IList<Table3D> list3D = new List<Table3D> (0);
@@ -136,7 +136,7 @@ namespace ScoobyRom
 			get { return this.calIDfromRom; }
 		}
 
-		public Util.Range? TableSearchRange {
+		public Tables.Denso.Table.Range? TableSearchRange {
 			get { return this.tableSearchRange; }
 		}
 
@@ -148,8 +148,6 @@ namespace ScoobyRom
 		{
 			romLoaded = false;
 			rom = new Subaru.File.Rom (path);
-
-			rom.DisplayTablePosWithOffset = Config.DisplayTablePosWithOffset;
 
 			rom.FindMetadata ();
 

@@ -32,7 +32,7 @@ namespace Tables.Denso
 	/// <summary>
 	/// Common functionality for 2D and 3D Table types.
 	/// </summary>
-	public abstract class Table
+	public abstract partial class Table
 	{
 		// Axis item count restrictions. Count < 2 or high does not make sense.
 		// This restriction helps avoiding false positives.
@@ -90,13 +90,6 @@ namespace Tables.Denso
 			set { tableAddressOffset = value; }
 		}
 
-		static protected bool displayTablePosWithOffset = true;
-
-		public static bool DisplayTablePosWithOffset {
-			get { return displayTablePosWithOffset; }
-			set { displayTablePosWithOffset = value; }
-		}
-
 		#region Fields
 
 		protected int countX;
@@ -122,13 +115,6 @@ namespace Tables.Denso
 		public int Location {
 			get { return location; }
 			set { location = value; }
-		}
-
-		public int LocationCorrected {
-			get{
-				int offset = displayTablePosWithOffset ?
-							TableAddressOffset : 0;
-				return location + offset;}
 		}
 
 		/// <summary>
@@ -189,22 +175,6 @@ namespace Tables.Denso
 		public Range RangeX {
 			get { return rangeX; }
 			set { rangeX = value; }
-		}
-
-		public int RangeXPosCorrected {
-			get {
-				int offset = displayTablePosWithOffset ?
-							TableAddressOffset : 0;
-				return rangeX.Pos + offset;
-			}
-		}
-
-		public int RangeYPosCorrected {
-			get {
-				int offset = displayTablePosWithOffset ?
-							TableAddressOffset : 0;
-				return rangeY.Pos + offset;
-			}
 		}
 
 		public Range RangeY {
@@ -283,6 +253,17 @@ namespace Tables.Denso
 		protected static void ThrowInvalidTableType (TableType tableType)
 		{
 			throw new ArgumentOutOfRangeException ("Invalid TableType: " + tableType.ToString ());
+		}
+
+		/// <summary>
+		/// Return address taking in account address offset
+		/// if parameter set to 'true'
+		/// </summary>
+		public int LocationCorrected (bool considerTableAddressOffset = true)
+		{
+			int offset = considerTableAddressOffset ?
+							TableAddressOffset : 0;
+			return location + offset;
 		}
 
 		#region ReadValues

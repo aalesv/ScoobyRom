@@ -35,7 +35,7 @@ namespace Tables.Denso
 		const int CountYMax = CountMax;
 
 		//Is 1x1 table valid. Usually no.
-		static protected bool allowed1x1Table = false;
+		static private bool allowed1x1Table = false;
 
 		public static bool Allowed1x1Table {
 			get { return allowed1x1Table; }
@@ -99,14 +99,6 @@ namespace Tables.Denso
 		Array valuesZ;
 		float[] valuesZasFloats;
 		float valuesZmin, valuesZmax, valuesZavg;
-
-		public int RangeZPosCorrected {
-			get {
-				int offset = displayTablePosWithOffset ?
-							TableAddressOffset : 0;
-				return rangeZ.Pos + offset;
-			}
-		}
 
 		// metadata
 		string nameY, unitZ;

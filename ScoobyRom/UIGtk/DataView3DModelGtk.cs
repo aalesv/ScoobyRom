@@ -144,10 +144,11 @@ namespace ScoobyRom
 			store.SetValue (iter, (int)ColumnNr3D.Multiplier, table3D.Multiplier);
 			store.SetValue (iter, (int)ColumnNr3D.Offset, table3D.Offset);
 
-			store.SetValue (iter, (int)ColumnNr3D.XPos, table3D.RangeXPosCorrected);
-			store.SetValue (iter, (int)ColumnNr3D.YPos, table3D.RangeYPosCorrected);
-			store.SetValue (iter, (int)ColumnNr3D.ZPos, table3D.RangeZPosCorrected);
-			store.SetValue (iter, (int)ColumnNr3D.Location, table3D.LocationCorrected);
+			bool d = Config.DisplayTablePosWithOffset;
+			store.SetValue (iter, (int)ColumnNr3D.XPos, table3D.RangeX.PosCorrected(d));
+			store.SetValue (iter, (int)ColumnNr3D.YPos, table3D.RangeY.PosCorrected(d));
+			store.SetValue (iter, (int)ColumnNr3D.ZPos, table3D.RangeZ.PosCorrected(d));
+			store.SetValue (iter, (int)ColumnNr3D.Location, table3D.LocationCorrected(d));
 			store.SetValue (iter, (int)ColumnNr3D.Description, table3D.Description);
 			Toggle (iter, table3D.Selected);
 

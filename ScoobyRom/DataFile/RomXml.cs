@@ -60,7 +60,7 @@ namespace ScoobyRom.DataFile
 		// table objects in here will only contain parsed metadata for merging into real data objects
 		List<Table2D> xml2D = new List<Table2D> (0);
 		List<Table3D> xml3D = new List<Table3D> (0);
-		Util.Range? tableSearchRange;
+		Tables.Denso.Table.Range? tableSearchRange;
 
 		public RomMetadata RomMetadata {
 			get { return romMetadata; }
@@ -74,7 +74,7 @@ namespace ScoobyRom.DataFile
 			set { romStream = value; }
 		}
 
-		public Util.Range? TableSearchRange {
+		public Tables.Denso.Table.Range? TableSearchRange {
 			get { return tableSearchRange; }
 			set { tableSearchRange = value; }
 		}
@@ -225,7 +225,7 @@ namespace ScoobyRom.DataFile
 				tableSearchEnd = ParseHexInt ((string)at, at);
 			}
 			if (tableSearchStart > 0 && tableSearchEnd > 0) {
-				TableSearchRange = Util.Range.FromPositions (tableSearchStart, tableSearchEnd);
+				TableSearchRange = Tables.Denso.Table.Range.FromPositions (tableSearchStart, tableSearchEnd);
 			}
 		}
 
@@ -297,7 +297,7 @@ namespace ScoobyRom.DataFile
 				table2D.NameX = name;
 				table2D.UnitX = unit;
 				if (address.HasValue)
-					table2D.RangeX = new Util.Range (address.Value, 0);
+					table2D.RangeX = new Tables.Denso.Table.Range (address.Value, 0);
 			}
 
 			subEl = el.Element (X_values);
@@ -306,7 +306,7 @@ namespace ScoobyRom.DataFile
 				ParseValues (subEl, out address, out unit, out tableType);
 				table2D.UnitY = unit;
 				if (address.HasValue)
-					table2D.RangeY = new Util.Range (address.Value, 0);
+					table2D.RangeY = new Tables.Denso.Table.Range (address.Value, 0);
 				if (tableType.HasValue)
 					table2D.TableType = tableType.Value;
 			}
@@ -330,7 +330,7 @@ namespace ScoobyRom.DataFile
 				table3D.NameX = name;
 				table3D.UnitX = unit;
 				if (address.HasValue)
-					table3D.RangeX = new Util.Range (address.Value, 0);
+					table3D.RangeX = new Tables.Denso.Table.Range (address.Value, 0);
 			}
 
 			subEl = el.Element (X_axisY);
@@ -339,7 +339,7 @@ namespace ScoobyRom.DataFile
 				table3D.NameY = name;
 				table3D.UnitY = unit;
 				if (address.HasValue)
-					table3D.RangeY = new Util.Range (address.Value, 0);
+					table3D.RangeY = new Tables.Denso.Table.Range (address.Value, 0);
 			}
 
 			subEl = el.Element (X_values);
@@ -348,7 +348,7 @@ namespace ScoobyRom.DataFile
 				ParseValues (subEl, out address, out unit, out tableType);
 				table3D.UnitZ = unit;
 				if (address.HasValue)
-					table3D.RangeZ = new Util.Range (address.Value, 0);
+					table3D.RangeZ = new Tables.Denso.Table.Range (address.Value, 0);
 				if (tableType.HasValue)
 					table3D.TableType = tableType.Value;
 			}

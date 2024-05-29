@@ -47,16 +47,6 @@ namespace Subaru.File
 		int? reflashCount;
 		RomRaiderEditStamp.RomRaiderEditStampData? romRaiderEditStampData;
 
-		protected bool displayTablePosWithOffset = true;
-
-		public bool DisplayTablePosWithOffset {
-			get { return displayTablePosWithOffset; }
-			set {
-					displayTablePosWithOffset = value;
-					Table.DisplayTablePosWithOffset = value;
-				}
-		}
-
 		public string Path {
 			get { return this.path; }
 		}
@@ -105,6 +95,8 @@ namespace Subaru.File
 			Table3D.Allowed1x1Table = this.Has1x1Tables3D();
 			if (this.Has1x1Tables3D())
 				Table2D.CountXMin = 1;
+			else
+				Table2D.CountXMin = Table.CountMin;
 		}
 
 		public int RomLoadAddress()
@@ -246,7 +238,7 @@ namespace Subaru.File
 		}
 		*/
 
-		public void FindMaps (Util.Range? tableSearchRange, out IList<Table2D> list2D, out IList<Table3D> list3D)
+		public void FindMaps (Tables.Denso.Table.Range? tableSearchRange, out IList<Table2D> list2D, out IList<Table3D> list3D)
 		{
 			int startPos, lastPos;
 			if (tableSearchRange.HasValue) {

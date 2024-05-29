@@ -21,84 +21,98 @@
 
 using System;
 
-namespace Util
+namespace Tables.Denso
 {
-	public struct Range : IEquatable<Range>
+	public abstract partial class Table
 	{
-		public static Range FromPositions (int start, int last)
+		public struct Range : IEquatable<Range>
 		{
-			Range range = new Range ();
-			range.pos = start;
-			range.Last = last;
-			return range;
+			public static Range FromPositions (int start, int last)
+			{
+				Range range = new Range ();
+				range.pos = start;
+				range.Last = last;
+				return range;
+			}
+
+			public static Range Zero
+			{
+				get { return new Range (0, 0); }
+			}
+
+			// 2 fields
+			int pos;
+			int size;
+
+			/// <summary>
+			/// Position of first byte.
+			/// </summary>
+			public int Pos {
+				get { return pos; }
+				set { pos = value; }
+			}
+		
+			/// <summary>
+			/// Return address taking in account address offset
+			/// if parameter set to 'true'
+			/// </summary>
+			public int PosCorrected(bool considerTableAddressOffset = true) {
+				//It is safe to access TableAddressOffset because it is static
+				int offset = considerTableAddressOffset ?
+							TableAddressOffset : 0;
+				return pos + offset;
+			}
+
+			/// <summary>
+			/// Data size in bytes.
+			/// </summary>
+			public int Size {
+				get { return size; }
+				set { size = value; }
+			}
+
+			/// <summary>
+			/// Last used byte position.
+			/// (= Pos + Size - 1)
+			/// </summary>
+			public int Last {
+				get { return pos + size - 1; }
+				set { size = value - pos + 1; }
+			}
+
+			public Range (int start, int size)
+			{
+				this.pos = start;
+				this.size = size;
+			}
+
+			public bool Intersects (Range other)
+			{
+				if (other.Last < this.pos || other.pos > this.Last)
+					return false;
+				else
+					return true;
+			}
+
+			public override string ToString ()
+			{
+				return string.Format ("[Pos=0x{0:X}, Size={1}, Last=0x{2:X}]", pos, size.ToString (), Last);
+			}
+
+			public override int GetHashCode ()
+			{
+				return this.pos ^ (this.size << 3);
+			}
+
+
+			#region IEquatable<Range> implementation
+
+			public bool Equals (Range other)
+			{
+				return this.pos == other.pos && this.size == other.size;
+			}
+
+			#endregion
 		}
-
-		public static Range Zero
-		{
-			get { return new Range (0, 0); }
-		}
-
-		// 2 fields
-		int pos;
-		int size;
-
-		/// <summary>
-		/// Position of first byte.
-		/// </summary>
-		public int Pos {
-			get { return pos; }
-			set { pos = value; }
-		}
-
-		/// <summary>
-		/// Data size in bytes.
-		/// </summary>
-		public int Size {
-			get { return size; }
-			set { size = value; }
-		}
-
-		/// <summary>
-		/// Last used byte position.
-		/// (= Pos + Size - 1)
-		/// </summary>
-		public int Last {
-			get { return pos + size - 1; }
-			set { size = value - pos + 1; }
-		}
-
-		public Range (int start, int size)
-		{
-			this.pos = start;
-			this.size = size;
-		}
-
-		public bool Intersects (Range other)
-		{
-			if (other.Last < this.pos || other.pos > this.Last)
-				return false;
-			else
-				return true;
-		}
-
-		public override string ToString ()
-		{
-			return string.Format ("[Pos=0x{0:X}, Size={1}, Last=0x{2:X}]", pos, size.ToString (), Last);
-		}
-
-		public override int GetHashCode ()
-		{
-			return this.pos ^ (this.size << 3);
-		}
-
-
-		#region IEquatable<Range> implementation
-
-		public bool Equals (Range other)
-		{
-			return this.pos == other.pos && this.size == other.size;
-		}
-
-		#endregion
 	}
 }
