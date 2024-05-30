@@ -614,7 +614,7 @@ namespace Tables.Denso
 				new XAttribute ("type", axisType.RRStr ()),
 				new XAttribute ("name", name),
 				new XAttribute ("storagetype", "float"),
-				new XAttribute ("storageaddress", HexNum (range.Pos)),
+				new XAttribute ("storageaddress", HexNum (range.PosCorrected())),
 				CommentValuesStats (min, max),
 				RRXmlScaling (unit, ExpressionVarName, ExpressionVarName, "0.00", 1f, 5f));
 		}

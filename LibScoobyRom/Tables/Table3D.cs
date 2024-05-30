@@ -358,7 +358,7 @@ namespace Tables.Denso
 				new XAttribute ("endian", endian),
 				new XAttribute ("sizex", countX.ToString ()),
 				new XAttribute ("sizey", countY.ToString ()),
-				new XAttribute ("storageaddress", HexNum (rangeZ.Pos)),
+				new XAttribute ("storageaddress", HexNum (rangeZ.PosCorrected())),
 				CommentValuesStats (valuesZmin, valuesZmax, valuesZavg),
 				RRXmlScaling (unitZ, Expression, ExpressionReverse, "0.000", 0.01f, 0.1f),
 				RRXmlAxis (AxisType.X, nameX, unitX, TableType.Float, rangeX, valuesX, Xmin, Xmax),
@@ -373,13 +373,13 @@ namespace Tables.Denso
 		public override XElement TunerProXdf (int categoryID)
 		{
 			return new XElement ("XDFTABLE",
-				new XAttribute ("uniqueid", HexNum (location)),
+				new XAttribute ("uniqueid", HexNum (LocationCorrected())),
 				new XAttribute ("flags", HexNum (0)),
 				new XElement ("title", TitleForExport),
 				CategoryXdf (categoryID),
-				AxisXdf (AxisType.X, TableType.Float, countX, rangeX.Pos, unitX),
-				AxisXdf (AxisType.Y, TableType.Float, countY, rangeY.Pos, unitY),
-				ZAxisXdf (tableType, countX, countY, rangeZ.Pos, unitZ, GenerateExpression (ExpressionVarNameXdf))
+				AxisXdf (AxisType.X, TableType.Float, countX, rangeX.PosCorrected(), unitX),
+				AxisXdf (AxisType.Y, TableType.Float, countY, rangeY.PosCorrected(), unitY),
+				ZAxisXdf (tableType, countX, countY, rangeZ.PosCorrected(), unitZ, GenerateExpression (ExpressionVarNameXdf))
 			);
 		}
 

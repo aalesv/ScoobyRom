@@ -185,6 +185,8 @@ namespace ScoobyRom
 			rom.ProgressChanged -= OnProgressChanged;
 
 			RomFileNameWithPath = path;
+			//Don't trust XML 'offset' value too much
+			romMetadata.RomLoadAddress = rom.RomLoadAddress();
 			
 			romLoaded = true;
 

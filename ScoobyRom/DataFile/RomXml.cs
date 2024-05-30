@@ -272,7 +272,7 @@ namespace ScoobyRom.DataFile
 			xw.Close ();
 		}
 
-		static void ParseCommon (XElement el, Table table)
+		void ParseCommon (XElement el, Table table)
 		{
 			// allow null values here when attributes don't exist
 			table.Category = (string)el.Attribute (X_category);
@@ -280,10 +280,10 @@ namespace ScoobyRom.DataFile
 
 			XAttribute attr = el.Attribute (X_address);
 			if (attr != null)
-				table.Location = ParseHexInt ((string)attr, attr);
+				table.Location = ParseHexInt ((string)attr, attr) - romMetadata.RomLoadAddress;
 		}
 
-		static Table2D ParseTable2D (XElement el)
+		Table2D ParseTable2D (XElement el)
 		{
 			Table2D table2D = new Table2D ();
 			ParseCommon (el, table2D);
@@ -297,7 +297,10 @@ namespace ScoobyRom.DataFile
 				table2D.NameX = name;
 				table2D.UnitX = unit;
 				if (address.HasValue)
-					table2D.RangeX = new Tables.Denso.Table.Range (address.Value, 0);
+					table2D.RangeX = new Tables.Denso.Table.Range (
+						address.Value - romMetadata.RomLoadAddress,
+						0
+					);
 			}
 
 			subEl = el.Element (X_values);
@@ -306,7 +309,10 @@ namespace ScoobyRom.DataFile
 				ParseValues (subEl, out address, out unit, out tableType);
 				table2D.UnitY = unit;
 				if (address.HasValue)
-					table2D.RangeY = new Tables.Denso.Table.Range (address.Value, 0);
+					table2D.RangeY = new Tables.Denso.Table.Range (
+						address.Value - romMetadata.RomLoadAddress,
+						0
+					);
 				if (tableType.HasValue)
 					table2D.TableType = tableType.Value;
 			}
@@ -316,7 +322,7 @@ namespace ScoobyRom.DataFile
 			return table2D;
 		}
 
-		static Table3D ParseTable3D (XElement el)
+		Table3D ParseTable3D (XElement el)
 		{
 			Table3D table3D = new Table3D ();
 			ParseCommon (el, table3D);
@@ -330,7 +336,10 @@ namespace ScoobyRom.DataFile
 				table3D.NameX = name;
 				table3D.UnitX = unit;
 				if (address.HasValue)
-					table3D.RangeX = new Tables.Denso.Table.Range (address.Value, 0);
+					table3D.RangeX = new Tables.Denso.Table.Range (
+						address.Value - romMetadata.RomLoadAddress,
+						0
+					);
 			}
 
 			subEl = el.Element (X_axisY);
@@ -339,7 +348,10 @@ namespace ScoobyRom.DataFile
 				table3D.NameY = name;
 				table3D.UnitY = unit;
 				if (address.HasValue)
-					table3D.RangeY = new Tables.Denso.Table.Range (address.Value, 0);
+					table3D.RangeY = new Tables.Denso.Table.Range (
+						address.Value - romMetadata.RomLoadAddress,
+						0
+					);
 			}
 
 			subEl = el.Element (X_values);
@@ -348,7 +360,10 @@ namespace ScoobyRom.DataFile
 				ParseValues (subEl, out address, out unit, out tableType);
 				table3D.UnitZ = unit;
 				if (address.HasValue)
-					table3D.RangeZ = new Tables.Denso.Table.Range (address.Value, 0);
+					table3D.RangeZ = new Tables.Denso.Table.Range (
+						address.Value - romMetadata.RomLoadAddress,
+						0
+					);
 				if (tableType.HasValue)
 					table3D.TableType = tableType.Value;
 			}
@@ -418,20 +433,44 @@ namespace ScoobyRom.DataFile
 		/// <summary>
 		/// Parses hex number e.g."0x123af". Prefix "0x" is required.
 		/// </summary>
-		static internal int ParseHexInt (string strToParse, XObject xObj)
+		static public int ParseHexInt (string strToParse, XObject xObj)
 		{
 			const string HexPrefix = "0x";
+			const string HexPrefix_plus  = "+0x";
+			const string HexPrefix_minus = "-0x";
+			int m = 1;
+			string prefix = HexPrefix;
 
 			// Prefix "0x" required in RomRaider-format
 			// but not allowed in int.Parse(...) even though using NumberStyles.HexNumber.
-			int index0x = strToParse.IndexOf (HexPrefix);
+			int index0x = strToParse.IndexOf (
+					HexPrefix,
+					0,
+					HexPrefix.Length);
+			if (index0x < 0)
+			{
+				index0x = strToParse.IndexOf (
+					HexPrefix_plus,
+					0,
+					HexPrefix_plus.Length);
+				prefix = HexPrefix_plus;
+			}
+			if (index0x < 0)
+			{
+				index0x = strToParse.IndexOf (
+					HexPrefix_minus,
+					0,
+					HexPrefix_minus.Length);
+				prefix = HexPrefix_minus;
+				m = -1;
+			}
 			if (index0x < 0) {
 				string message = "Prefix '" + HexPrefix + "' missing in XML item: " + xObj.ToString ();
 				ThrowXmlExceptionWithLineInfo (message, null, xObj);
 			}
 
 			try {
-				return int.Parse (strToParse.Substring (index0x + HexPrefix.Length), System.Globalization.NumberStyles.HexNumber, NumberFormatInfoInvariant);
+				return m * int.Parse (strToParse.Substring (index0x + prefix.Length), System.Globalization.NumberStyles.HexNumber, NumberFormatInfoInvariant);
 			} catch (Exception ex) {
 				ThrowParse (ex, xObj, "hex integer");
 				throw;
@@ -458,11 +497,11 @@ namespace ScoobyRom.DataFile
 			return new XElement (X_table2D,
 				new XAttribute (X_category, table2D.Category),
 				new XAttribute (X_name, table2D.Title),
-				new XAttribute (X_address, HexNum (table2D.Location)),
+				new XAttribute (X_address, HexNum (table2D.LocationCorrected())),
 				Table.CommentValuesStats (table2D.Xmin, table2D.Xmax),
-				GetAxisXElement (X_axisX, table2D.RangeX.Pos, table2D.NameX, table2D.UnitX),
+				GetAxisXElement (X_axisX, table2D.RangeX.PosCorrected(), table2D.NameX, table2D.UnitX),
 				Table.CommentValuesStats (table2D.Ymin, table2D.Ymax, table2D.Yavg),
-				GetValuesElement (table2D.RangeY.Pos, table2D.UnitY, table2D.TableType), new XElement (X_description, table2D.Description));
+				GetValuesElement (table2D.RangeY.PosCorrected(), table2D.UnitY, table2D.TableType), new XElement (X_description, table2D.Description));
 		}
 
 		static XElement GetXElement (Table3D table3D)
@@ -470,13 +509,13 @@ namespace ScoobyRom.DataFile
 			return new XElement (X_table3D,
 				new XAttribute (X_category, table3D.Category),
 				new XAttribute (X_name, table3D.Title),
-				new XAttribute (X_address, HexNum (table3D.Location)),
+				new XAttribute (X_address, HexNum (table3D.LocationCorrected())),
 				Table.CommentValuesStats (table3D.Xmin, table3D.Xmax),
-				GetAxisXElement (X_axisX, table3D.RangeX.Pos, table3D.NameX, table3D.UnitX),
+				GetAxisXElement (X_axisX, table3D.RangeX.PosCorrected(), table3D.NameX, table3D.UnitX),
 				Table.CommentValuesStats (table3D.Ymin, table3D.Ymax),
-				GetAxisXElement (X_axisY, table3D.RangeY.Pos, table3D.NameY, table3D.UnitY),
+				GetAxisXElement (X_axisY, table3D.RangeY.PosCorrected(), table3D.NameY, table3D.UnitY),
 				Table.CommentValuesStats (table3D.Zmin, table3D.Zmax, table3D.Zavg),
-				GetValuesElement (table3D.RangeZ.Pos, table3D.UnitZ, table3D.TableType),
+				GetValuesElement (table3D.RangeZ.PosCorrected(), table3D.UnitZ, table3D.TableType),
 				new XElement (X_description, table3D.Description));
 		}
 

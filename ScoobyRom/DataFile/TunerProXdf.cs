@@ -69,7 +69,7 @@ namespace ScoobyRom.DataFile
 				new XElement ("deftitle", romMetadata.CalibrationID),
 				new XElement ("description", ScoobyRom.MainClass.GeneratedBy),
 				new XElement ("author", "unknown"),
-				new XElement ("baseoffset", 0),
+				new XElement ("baseoffset", romMetadata.Offset),
 				// <DEFAULTS datasizeinbits="16" sigdigits="2" outputtype="1" signed="0" lsbfirst="0" float="0" />
 				new XElement ("DEFAULTS",
 					new XAttribute ("datasizeinbits", 16),

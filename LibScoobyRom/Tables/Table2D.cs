@@ -246,7 +246,7 @@ namespace Tables.Denso
 				new XAttribute ("storagetype", tableType.ToRRType ()),
 				new XAttribute ("endian", endian),
 				new XAttribute ("sizey", countX.ToString ()),
-				new XAttribute ("storageaddress", HexNum (rangeY.Pos)),
+				new XAttribute ("storageaddress", HexNum (rangeY.PosCorrected())),
 				CommentValuesStats (valuesYmin, valuesYmax, valuesYavg),
 				RRXmlScaling (unitX, Expression, ExpressionReverse, "0.000", 0.01f, 0.1f),
 				RRXmlAxis (AxisType.Y, nameX, unitX, TableType.Float, rangeX, valuesX, Xmin, Xmax),
@@ -260,13 +260,13 @@ namespace Tables.Denso
 		public override XElement TunerProXdf (int categoryID)
 		{
 			return new XElement ("XDFTABLE",
-				new XAttribute ("uniqueid", HexNum (location)),
+				new XAttribute ("uniqueid", HexNum (LocationCorrected())),
 				new XAttribute ("flags", HexNum (0)),
 				new XElement ("title", TitleForExport),
 				CategoryXdf (categoryID),
 				EmptyXAxisXdf (),
-				AxisXdf (AxisType.Y, TableType.Float, countX, rangeX.Pos, unitX),
-				ZAxisXdf (tableType, 0, countX, rangeY.Pos, unitY, GenerateExpression (ExpressionVarNameXdf))
+				AxisXdf (AxisType.Y, TableType.Float, countX, rangeX.PosCorrected(), unitX),
+				ZAxisXdf (tableType, 0, countX, rangeY.PosCorrected(), unitY, GenerateExpression (ExpressionVarNameXdf))
 			);
 		}
 

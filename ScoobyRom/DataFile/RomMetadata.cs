@@ -48,6 +48,7 @@ namespace ScoobyRom.DataFile
 		const string RRX_memmodel = "memmodel";
 		const string RRX_flashmethod = "flashmethod";
 		const string RRX_filesize = "filesize";
+		const string RRX_offset = "offset";
 
 		// = calibration ID in most cases
 		string xmlid;
@@ -65,6 +66,7 @@ namespace ScoobyRom.DataFile
 		string transmission;
 		string memmodel;
 		string flashmethod;
+		int romLoadAddress;
 
 		// int.Max is 2 GiB, more than enough
 		int filesize;
@@ -72,6 +74,16 @@ namespace ScoobyRom.DataFile
 		public RomMetadata ()
 		{
 		}
+
+		public int RomLoadAddress {
+			get { return romLoadAddress; }
+			set { romLoadAddress = value; }
+		} 
+		
+		// Offset is added to all addresses by editors, so we must negate value
+		public string Offset {
+			get { return "-0x" + romLoadAddress.ToString("X"); }
+		} 
 
 		public int Filesize {
 			get { return this.filesize; }
@@ -173,6 +185,7 @@ namespace ScoobyRom.DataFile
 					new XElement (RRX_submodel, submodel),
 					new XElement (RRX_transmission, transmission),
 					new XElement (RRX_memmodel, memmodel),
+					romLoadAddress != 0 ? new XElement (RRX_offset, Offset) : null,
 					new XElement (RRX_flashmethod, flashmethod),
 					// RomRaider filesize needs integer and must not have space after postfix
 					// i.e. "1536 kB", "1MB" and not "1 MB"
@@ -206,6 +219,12 @@ namespace ScoobyRom.DataFile
 			d.Transmission = (string)romidElement.Element (RRX_transmission);
 			d.Memmodel = (string)romidElement.Element (RRX_memmodel);
 			d.Flashmethod = (string)romidElement.Element (RRX_flashmethod);
+			
+			el = romidElement.Element (RRX_offset);
+			if (el != null)
+				// Offset is added to all addresses by editors, so we must negate value
+				d.RomLoadAddress = - ParseHexInt ((string)el, el);
+			
 			return d;
 		}
 
@@ -217,18 +236,33 @@ namespace ScoobyRom.DataFile
 		static internal int ParseHexInt (string strToParse, XObject xObj)
 		{
 			const string HexPrefix = "0x";
+			int val;
+			//Multiplier that keeps sign of strToParse
+			int m = 1;
 
 			int index0x = strToParse.IndexOf (HexPrefix);
 			if (index0x >= 0) {
-				strToParse = strToParse.Substring (index0x + HexPrefix.Length);
+				val = RomXml.ParseHexInt(strToParse, xObj);
 			}
+			else
+			{
+				//Minus sign is not allowed for hex numbers, work around this
+				int index_minus = strToParse.IndexOf ("-");
+				if (index_minus == 0)
+				{
+					//This is negative number
+					m = -1;
+					strToParse = strToParse.Substring (1);
+				}
 
-			try {
-				return int.Parse (strToParse, System.Globalization.NumberStyles.HexNumber, System.Globalization.NumberFormatInfo.InvariantInfo);
-			} catch (Exception ex) {
-				ThrowParse (ex, xObj, "hex integer");
-				throw;
+				try {
+					val = int.Parse (strToParse, System.Globalization.NumberStyles.HexNumber, System.Globalization.NumberFormatInfo.InvariantInfo);
+				} catch (Exception ex) {
+					ThrowParse (ex, xObj, "hex integer");
+					throw;
+				}
 			}
+			return m * val;
 		}
 
 		/// <summary>
