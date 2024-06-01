@@ -30,64 +30,101 @@ namespace Subaru
 	public class RomChecksumming
 	{
 		public const int SizeOfNativeStruct = 3 * sizeof(UInt32);
-		public const int ChecksumTableRecordCount = 17;
+		//public const int ChecksumTableRecordCount = 17;
 		public const int ChecksumConstant = 0x5AA5A55A;
 
-		int tablePos;
+		int[] tablePos;
 		System.IO.Stream stream;
 		List<RomChecksumRecord> checksumRecords;
 		RomType romType;
 
+		//Must correspond GetTablePos
+		public static int[] ChecksumTableRecordCount (RomType romType)
+		{
+			switch (romType) {
+			case RomType.SH7055:
+			case RomType.SH7058:
+			case RomType.SH7059:
+				return new int[] {17};
+			case RomType.SH72531:
+				return new int[] {17, 2};
+			//TODO check this
+			case RomType.SH72543R:
+				return new int[] {17};
+			case RomType.MPC5746_1552:
+			case RomType.MPC5746_3984:
+				return new int[] {17, 2};
+			default:
+				return new int[] {};
+			}
+		}
+
+		public int[] ChecksumTableRecordCount()
+		{
+			return ChecksumTableRecordCount(romType);
+		}
 
 		public RomChecksumming (RomType romType, System.IO.Stream stream) : this (GetTablePos (romType), stream)
 		{
 			this.romType = romType;
 		}
 
-		public RomChecksumming (int tablePos, System.IO.Stream stream)
+		public RomChecksumming (int[] tablePos, System.IO.Stream stream)
 		{
 			this.tablePos = tablePos;
 			this.stream = stream;
 		}
 
-		public static int GetTablePos (RomType romType)
+		//Must correspond ChecksumTableRecordCount
+		public static int[] GetTablePos (RomType romType)
 		{
 			switch (romType) {
 			case RomType.SH7055:
-				return 0x7FB80;
+				return new int[] {0x7FB80};
 			case RomType.SH7058:
-				return 0xFFB80;
+				return new int[] {0xFFB80};
 			case RomType.SH7059:
-				return 0x17FB80;
+				return new int[] {0x17FB80};
 			case RomType.SH72531:
-				return 0x13F500;
+				return new int[] {0x13F500, 0x13F5E8};
+			//TODO check this
 			case RomType.SH72543R:
-				return 0x1FF800;
+				return new int[] {0x1FF800};
 			case RomType.MPC5746_1552:
-				return 0x183E00;
+				return new int[] {0x183E00, 0x183EE0};
 			case RomType.MPC5746_3984:
-				return 0x3E3E00;
+				return new int[] {0x3E3E00, 0x3E3EE0};
 			default:
-				return -1;
+				return new int[] {};
 			}
 		}
 
 		public IList<RomChecksumRecord> ReadTableRecords ()
 		{
-			return ReadTableRecords (this.tablePos, ChecksumTableRecordCount);
+			//return ReadTableRecords (this.tablePos, ChecksumTableRecordCount);
+			List<RomChecksumRecord> records = new List<RomChecksumRecord> ();
+			for (int i = 0; i < this.tablePos.Length; i++) {
+				IList<RomChecksumRecord> r = ReadTableRecords(this.tablePos[i],
+													this.ChecksumTableRecordCount()[i]
+												);
+				//records = records.Concat(r);
+				records.AddRange(r);
+			}
+			return records;
 		}
 
-		public IList<RomChecksumRecord> ReadTableRecords (int count)
+		/*public IList<RomChecksumRecord> ReadTableRecords (int count)
 		{
 			return ReadTableRecords (this.tablePos, count);
-		}
+		}*/
 
 		public IList<RomChecksumRecord> ReadTableRecords (int pos, int count)
 		{
 			List<RomChecksumRecord> records = new List<RomChecksumRecord> (count);
 
 			int offset = Rom.RomLoadAddress(this.romType);
-			stream.Seek (tablePos, System.IO.SeekOrigin.Begin);
+			//stream.Seek (tablePos, System.IO.SeekOrigin.Begin);
+			stream.Seek (pos, System.IO.SeekOrigin.Begin);
 			for (int i = 0; i < count; i++) {
 				int _start 	  = stream.ReadInt32BigEndian (),
 					_end	  = stream.ReadInt32BigEndian ();

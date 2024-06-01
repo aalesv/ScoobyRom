@@ -77,9 +77,13 @@ namespace Subaru
 
 		public static int GetPos (RomType romType)
 		{
-			int pos = RomChecksumming.GetTablePos (romType);
-			if (pos >= 0)
-				pos += RomChecksumming.ChecksumTableRecordCount * RomChecksumming.SizeOfNativeStruct;
+			int pos = -1;
+			int[] pos_array = RomChecksumming.GetTablePos (romType);
+			if (pos_array.Length > 0) {
+				pos = pos_array[0];
+				if (pos >= 0)
+					pos += RomChecksumming.ChecksumTableRecordCount(romType)[0] * RomChecksumming.SizeOfNativeStruct;
+			}
 			return pos;
 		}
 	}
