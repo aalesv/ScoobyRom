@@ -92,7 +92,7 @@ namespace Subaru
 				int _start 	  = stream.ReadInt32BigEndian (),
 					_end	  = stream.ReadInt32BigEndian ();
 				//0 means that checksum is disabled, keep it.
-				if (_start == 0){
+				if (_start == 0 && _end == 0){
 					offset = 0;
 				}
 				int start 	 = _start - offset,
