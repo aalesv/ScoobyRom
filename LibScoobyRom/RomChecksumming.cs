@@ -89,8 +89,14 @@ namespace Subaru
 			int offset = Rom.RomLoadAddress(this.romType);
 			stream.Seek (tablePos, System.IO.SeekOrigin.Begin);
 			for (int i = 0; i < count; i++) {
-				int start 	 = stream.ReadInt32BigEndian () - offset,
-					end		 = stream.ReadInt32BigEndian () - offset,
+				int _start 	  = stream.ReadInt32BigEndian (),
+					_end	  = stream.ReadInt32BigEndian ();
+				//0 means that checksum is disabled, keep it.
+				if (_start == 0){
+					offset = 0;
+				}
+				int start 	 = _start - offset,
+					end		 = _end - offset,
 					checkSum = stream.ReadInt32BigEndian ();
 				RomChecksumRecord record = new RomChecksumRecord (start, end, checkSum);
 				records.Add (record);
