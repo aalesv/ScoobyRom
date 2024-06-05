@@ -119,13 +119,14 @@ namespace Subaru
 			for (int i = 0; i < count; i++) {
 				int start 	  = stream.ReadInt32BigEndian (),
 					end	  = stream.ReadInt32BigEndian (),
-					checkSum = stream.ReadInt32BigEndian ();
+					checkSum = stream.ReadInt32BigEndian (),
+					off = offset;
 				//0 means that checksum is disabled, keep it.
 				if (start == 0 && end == 0){
-					offset = 0;
+					off = 0;
 				}
-				start = start - offset;
-				end	 = end - offset;
+				start = start - off;
+				end	 = end - off;
 				RomChecksumRecord record = new RomChecksumRecord (start, end, checkSum);
 				records.Add (record);
 			}
