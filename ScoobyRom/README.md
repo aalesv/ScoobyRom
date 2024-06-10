@@ -80,6 +80,8 @@ ROM types confirmed working:
 		*	*SH7058, SH7058S* (1.0 MiB)
 		*	*SH7059* (1.5 MiB)
 		*	*SH72531* (1.25 MiB)
+	*	*NXP* microcontrollers
+		*	*MPC5746* (1.5 Mib and 4 Mib)
 
 * *Transmission Control Unit* (TCU):
 	*	Automatic Transmission (*Subaru 5AT*) (*SH7058*, 1.0 MiB)
