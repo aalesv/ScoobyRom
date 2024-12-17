@@ -151,6 +151,8 @@ namespace ScoobyRom
 
 			rom.FindMetadata ();
 
+			Console.WriteLine("ROM load address: 0x{0:X}", rom.RomLoadAddress());
+
 			string xmlPath = PathWithNewExtension (path, ".xml");
 			bool xmlExists = System.IO.File.Exists (xmlPath);
 
