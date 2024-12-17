@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using Gtk;
 using ScoobyRom;
 
@@ -110,6 +111,10 @@ public partial class MainWindow : Gtk.Window
 
 		this.notebook1.Page = DefaultNotebookPageShown;
 		OnNotebook1SwitchPage (null, null);
+
+		if (Config.OpenConsoleWindow) {
+			ShowConsoleWindow();
+		}
 
 		// program arguments: first argument is ROM path to auto-load
 		if (args != null && args.Length > 0 && !string.IsNullOrEmpty (args [0])) {
@@ -891,4 +896,37 @@ public partial class MainWindow : Gtk.Window
 	{
 		CurrentViewModel.ToggleAll (false);
 	}
+
+[DllImport("kernel32.dll", SetLastError = true)]
+static extern bool AllocConsole();
+
+[DllImport("kernel32.dll")]
+static extern IntPtr GetConsoleWindow();
+
+[DllImport("user32.dll")]
+static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+const int SW_HIDE = 0;
+const int SW_SHOW = 5;
+
+public static void ShowConsoleWindow()
+{
+    var handle = GetConsoleWindow();
+
+    if (handle == IntPtr.Zero)
+    {
+        AllocConsole();
+    }
+    else
+    {
+        ShowWindow(handle, SW_SHOW);
+    }
+}
+
+public static void HideConsoleWindow()
+{
+    var handle = GetConsoleWindow();
+    ShowWindow(handle, SW_HIDE);
+}
+
 }
