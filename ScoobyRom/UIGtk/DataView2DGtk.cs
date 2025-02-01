@@ -56,7 +56,7 @@ namespace ScoobyRom
 		public DataView2DGtk (DataView2DModelGtk viewModel, TreeView treeView)
 		{
 			this.viewModel = viewModel;
-			this.treeModel = viewModel.TreeModel;
+			this.treeModel = viewModel.ITreeModel;
 			this.treeView = treeView;
 
 			InitTreeView ();
@@ -209,7 +209,7 @@ namespace ScoobyRom
 		// Workaround: define own functions for all needed column types.
 
 		// FALSE if the row does MATCH, otherwise true !!!
-		bool TreeViewSearchFunc (TreeModel model, int column, string key, TreeIter iter)
+		bool TreeViewSearchFunc (ITreeModel model, int column, string key, TreeIter iter)
 		{
 			object content = model.GetValue (iter, column);
 

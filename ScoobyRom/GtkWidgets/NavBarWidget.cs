@@ -244,14 +244,16 @@ namespace GtkWidgets
 
 		#region events
 
-		protected override bool OnExposeEvent (Gdk.EventExpose ev)
+		protected override bool OnDrawn (Cairo.Context ev)
 		{
-			base.OnExposeEvent (ev);
+			base.OnDrawn (ev);
 
 			// Insert drawing code here.
-			using (Cairo.Context cr = Gdk.CairoHelper.Create (ev.Window)) {
+			//GTK3 migration temporary
+			/*using (Cairo.Context cr = Gdk.CairoHelper.Create (ev.Window)) {
 				DrawEverything (cr);
-			}
+			}*/
+			DrawEverything(ev);
 			return true;
 		}
 
@@ -275,7 +277,8 @@ namespace GtkWidgets
 			//PrintAdjustment (viewport.Hadjustment);
 		}
 
-		protected override void OnSizeRequested (ref Gtk.Requisition requisition)
+		//GTK3 migration temporary
+		/*protected override void OnSizeRequested (ref Gtk.Requisition requisition)
 		{
 			// GUI designer automatically puts this widget into Viewport when property "Show Scrollbars" is set
 			// necessary for automatic scroll support.
@@ -299,6 +302,17 @@ namespace GtkWidgets
 			requisition.Width = minWidth;
 			requisition.Height = minHeight;
 			//Console.WriteLine ("OnSizeRequested -> Requisition: {0}x{1}", requisition.Width, requisition.Height);
+		}*/
+
+		//GTK3 migration temporary
+		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
+		{
+			natural_height = min_height = minHeight;
+		}
+
+		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
+		{
+			natural_width = min_width = minWidth;
 		}
 
 		void Viewport_ScrollEvent (object o, ScrollEventArgs args)
@@ -534,8 +548,9 @@ namespace GtkWidgets
 			if (arrowType == ArrowType.Right)
 				x -= dx;
 
-			Gtk.Style.PaintArrow (this.Style, this.GdkWindow, StateType.Normal, ShadowType.Out, clipping_area, this, "",
-				arrowType, false, x, y, dx, height);
+			//GTK3 migration temporary
+			//Gtk.Style.PaintArrow (this.Style, this.GdkWindow, StateType.Normal, ShadowType.Out, clipping_area, this, "",
+			//	arrowType, false, x, y, dx, height);
 		}
 
 		void DrawRangeMarker (Cairo.Context cr, int pos, ArrowType arrowType)

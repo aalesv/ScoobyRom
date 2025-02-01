@@ -35,13 +35,14 @@ namespace Stetic
 				}
 				catch (System.Exception)
 				{
-					if ((name != "gtk-missing-image"))
-					{
+					//GTK3 migration temporary
+					//if ((name != "gtk-missing-image"))
+					//{
 						return Stetic.IconLoader.LoadIcon(widget, "gtk-missing-image", size);
-					}
-					else
-					{
-						Gdk.Pixmap pmap = new Gdk.Pixmap(Gdk.Screen.Default.RootWindow, sz, sz);
+					//}
+					//else
+					//{
+						/*Gdk.Pixmap pmap = new Gdk.Pixmap(Gdk.Screen.Default.RootWindow, sz, sz);
 						Gdk.GC gc = new Gdk.GC(pmap);
 						gc.RgbFgColor = new Gdk.Color(255, 255, 255);
 						pmap.DrawRectangle(gc, true, 0, 0, sz, sz);
@@ -55,8 +56,8 @@ namespace Stetic
 						pmap.DrawLine(gc, ((sz - 1)
 										- (sz / 4)), (sz / 4), (sz / 4), ((sz - 1)
 										- (sz / 4)));
-						return Gdk.Pixbuf.FromDrawable(pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
-					}
+						return Gdk.Pixbuf.FromDrawable(pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);*/
+					//}
 				}
 			}
 		}

@@ -38,7 +38,7 @@ namespace ScoobyRom
 
 		protected DataViewModelBaseGtk viewModel;
 
-		protected Gtk.TreeModel treeModel;
+		protected Gtk.ITreeModel treeModel;
 		protected Gtk.TreeView treeView;
 
 		protected CellRendererText cellRendererText, cellRendererTextEditable;
@@ -140,7 +140,7 @@ namespace ScoobyRom
 			get {
 				Tables.Denso.Table table = null;
 				TreeSelection selection = treeView.Selection;
-				TreeModel model;
+				ITreeModel model;
 				TreeIter iter;
 
 				// The iter will point to the selected row
@@ -157,7 +157,7 @@ namespace ScoobyRom
 
 		// These should be fast as they are called a lot, even for measuring hidden columns.
 
-		protected void TreeCellDataFuncHex (TreeViewColumn treeViewColumn, CellRenderer renderer, TreeModel treeModel, TreeIter iter)
+		protected void TreeCellDataFuncHex (TreeViewColumn treeViewColumn, CellRenderer renderer, ITreeModel treeModel, TreeIter iter)
 		{
 			int nr = (int)treeModel.GetValue (iter, columnsDict [treeViewColumn]);
 			cellRendererText.Text = nr.ToString ("X");
@@ -165,13 +165,13 @@ namespace ScoobyRom
 
 		// Without own data function floats would be rendered like "100.000000"
 		// ToString() only adds decimals where necessary - much better.
-		protected void TreeCellDataFuncFloat (TreeViewColumn treeViewColumn, CellRenderer renderer, TreeModel treeModel, TreeIter iter)
+		protected void TreeCellDataFuncFloat (TreeViewColumn treeViewColumn, CellRenderer renderer, ITreeModel treeModel, TreeIter iter)
 		{
 			float nr = (float)treeModel.GetValue (iter, columnsDict [treeViewColumn]);
 			cellRendererText.Text = nr.ToString ();
 		}
 
-		protected void TreeCellDataFuncTableType (TreeViewColumn treeViewColumn, CellRenderer renderer, TreeModel treeModel, TreeIter iter)
+		protected void TreeCellDataFuncTableType (TreeViewColumn treeViewColumn, CellRenderer renderer, ITreeModel treeModel, TreeIter iter)
 		{
 			var tt = (TableType)treeModel.GetValue (iter, columnsDict [treeViewColumn]);
 			cellRendererCombo.Text = tt.ToStr ();
@@ -354,7 +354,7 @@ namespace ScoobyRom
 		protected void ScrollToSelected ()
 		{
 			TreeSelection selection = treeView.Selection;
-			TreeModel model;
+			ITreeModel model;
 			TreeIter iter;
 			// The iter will point to the selected row
 			if (selection.GetSelected (out model, out iter)) {

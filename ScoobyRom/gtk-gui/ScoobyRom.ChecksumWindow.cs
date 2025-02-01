@@ -34,7 +34,8 @@ namespace ScoobyRom
 			// Widget ScoobyRom.ChecksumWindow
 			this.Name = "ScoobyRom.ChecksumWindow";
 			this.Title = "Checksum Window";
-			this.AllowShrink = true;
+			//GTK3 migration temporary
+			//this.AllowShrink = true;
 			this.DestroyWithParent = true;
 			// Container child ScoobyRom.ChecksumWindow.Gtk.Container+ContainerChild
 			this.vbox2 = new global::Gtk.VBox();

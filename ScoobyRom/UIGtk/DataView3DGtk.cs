@@ -68,7 +68,7 @@ namespace ScoobyRom
 			// However SetValue methods are not implemented in TreeModelSort,
 			// 		cannot be overridden, only for read-only data!?
 			//this.treeStore = new TreeModelSort (viewModel.TreeStore);
-			this.treeModel = viewModel.TreeModel;
+			this.treeModel = viewModel.ITreeModel;
 
 			this.treeView = treeView;
 
@@ -330,7 +330,7 @@ namespace ScoobyRom
 		// Workaround: define own functions for all needed column types.
 
 		// FALSE if the row does MATCH, otherwise true !!!
-		bool TreeViewSearchFunc (TreeModel model, int column, string key, TreeIter iter)
+		bool TreeViewSearchFunc (ITreeModel model, int column, string key, TreeIter iter)
 		{
 			object content = model.GetValue (iter, column);
 

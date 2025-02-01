@@ -172,14 +172,16 @@ public partial class MainWindow : Gtk.Window
 
 	void OpenRom (string path)
 	{
-		this.progressbar1.Adjustment.Lower = 0;
+		//GTK3 migration temporary
+		/*this.progressbar1.Adjustment.Lower = 0;
 		this.progressbar1.Adjustment.Upper = 100;
 		//this.progressbar1.Adjustment.StepIncrement = 5;
-		this.progressbar1.Adjustment.Value = 0;
+		this.progressbar1.Adjustment.Value = 0;*/
 
 		data.ProgressChanged += delegate(object s, System.ComponentModel.ProgressChangedEventArgs pArgs) {
 			Application.Invoke (delegate {
-				this.progressbar1.Adjustment.Value = pArgs.ProgressPercentage;
+				//this.progressbar1.Adjustment.Value = pArgs.ProgressPercentage;
+				this.progressbar1.Fraction = pArgs.ProgressPercentage / 100;
 			});
 		};
 
@@ -663,11 +665,12 @@ public partial class MainWindow : Gtk.Window
 
 	void OnNavigationBarActionActivated (object sender, EventArgs e)
 	{
-		if (navigationBarAction.Active) {
+		//GTK3 migration temporary
+		/*if (navigationBarAction.Active) {
 			navScrolledWindow.ShowAll ();
 		} else {
 			navScrolledWindow.HideAll ();
-		}
+		}*/
 	}
 
 	// create or close gnuplot window

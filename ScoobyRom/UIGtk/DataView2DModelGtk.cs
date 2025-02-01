@@ -1,4 +1,4 @@
-// DataView2DModelGtk.cs: Gtk.TreeModel for UI.
+// DataView2DModelGtk.cs: Gtk.ITreeModel for UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *

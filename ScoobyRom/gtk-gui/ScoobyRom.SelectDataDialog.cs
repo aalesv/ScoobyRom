@@ -42,9 +42,11 @@ namespace ScoobyRom
 			this.WindowPosition = ((global::Gtk.WindowPosition)(2));
 			this.Modal = true;
 			this.Resizable = false;
-			this.AllowShrink = true;
+			//GTK3 migration temporary
+			//this.AllowShrink = true;
 			// Internal child ScoobyRom.SelectDataDialog.VBox
-			global::Gtk.VBox w1 = this.VBox;
+			//global::Gtk.VBox w1 = this.VBox;
+			global::Gtk.VBox w1 = new Gtk.VBox();
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
@@ -151,7 +153,8 @@ namespace ScoobyRom
 			this.radiobuttonAll.Active = true;
 			this.radiobuttonAll.DrawIndicator = true;
 			this.radiobuttonAll.UseUnderline = true;
-			this.radiobuttonAll.Group = new global::GLib.SList (global::System.IntPtr.Zero);
+			//GTK3 migration temporary
+			//this.radiobuttonAll.Group = new global::GLib.SList (global::System.IntPtr.Zero);
 			this.table1.Add (this.radiobuttonAll);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1 [this.radiobuttonAll]));
 			w10.TopAttach = ((uint)(1));
@@ -187,7 +190,8 @@ namespace ScoobyRom
 			w13.Expand = false;
 			w13.Fill = false;
 			// Internal child ScoobyRom.SelectDataDialog.ActionArea
-			global::Gtk.HButtonBox w14 = this.ActionArea;
+			//GTK3 migration temporary
+			global::Gtk.ButtonBox w14 = this.ActionArea;
 			w14.Name = "dialog1_ActionArea";
 			w14.Spacing = 10;
 			w14.BorderWidth = ((uint)(5));

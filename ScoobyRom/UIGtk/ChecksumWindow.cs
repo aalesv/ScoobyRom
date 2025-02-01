@@ -159,7 +159,7 @@ namespace ScoobyRom
 
 		// These should be fast as they are called a lot, even for measuring hidden columns.
 
-		void TreeCellDataFunc (TreeViewColumn treeViewColumn, CellRenderer renderer, TreeModel treeModel, TreeIter iter)
+		void TreeCellDataFunc (TreeViewColumn treeViewColumn, CellRenderer renderer, ITreeModel treeModel, TreeIter iter)
 		{
 			// need col number to get value from store
 			ColNr colNr = columnsDict [treeViewColumn];

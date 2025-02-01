@@ -1,4 +1,4 @@
-﻿// DataViewModelBaseGtk.cs: Gtk.TreeModel common functionality for UI
+﻿// DataViewModelBaseGtk.cs: Gtk.ITreeModel common functionality for UI
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
@@ -44,7 +44,7 @@ namespace ScoobyRom
 
 		protected bool iconsVisible, iconsCached;
 
-		public TreeModel TreeModel {
+		public ITreeModel ITreeModel {
 			get { return this.store; }
 		}
 
@@ -211,8 +211,8 @@ namespace ScoobyRom
 		/// <summary>
 		/// Calls func on each node in model in a depth-first fashion.
 		/// If func returns true, then the tree ceases to be walked, and this method returns.
-		/// like Gtk.TreeModel.Foreach method which uses delegate bool TreeModelForeachFunc (ITreeModel model, TreePath path, TreeIter iter)
-		/// Tested: slightly faster on Linux than Gtk.TreeModel.Foreach.Foreach, probably because of additional arguments.
+		/// like Gtk.ITreeModel.Foreach method which uses delegate bool TreeModelForeachFunc (ITreeModel model, TreePath path, TreeIter iter)
+		/// Tested: slightly faster on Linux than Gtk.ITreeModel.Foreach.Foreach, probably because of additional arguments.
 		/// </summary>
 		/// <param name="func">Func.</param>
 		public void ForEach (Func<TreeIter, bool> func)

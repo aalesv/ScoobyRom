@@ -311,11 +311,12 @@ namespace Florence.GtkSharp
 
 		// taken and slightly mofified from NPlotSurface2D (NPlot GTK Widget)
 
-		protected override bool OnExposeEvent (Gdk.EventExpose args)
+		protected override bool OnDrawn (Cairo.Context args)
 		{
-			Gdk.Rectangle area = args.Area;
+			//GTK3 migration temporary
+			/*Gdk.Rectangle area = args.Area;
 
-			//Console.Write ("OnExposeEvent: ");
+			//Console.Write ("OnDrawn: ");
 			//Console.WriteLine (area);
 
 
@@ -335,7 +336,7 @@ namespace Florence.GtkSharp
 					Rectangle bounds = new Rectangle(0, 0, this.Allocation.Width, this.Allocation.Height);
 					this.InteractivePlotSurface2D.DoDraw (g, bounds);
 				}
-			}
+			}*/
 
 
 			return true;
