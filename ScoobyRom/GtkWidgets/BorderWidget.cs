@@ -66,11 +66,11 @@ namespace GtkWidgets
 		}
 
 
-		protected override bool OnDrawn (Cairo.Context evnt)
+		void OnDrawn (object o, DrawnArgs args)
 		{
 			// draw background fill before child widget so child appears on top
 			// use Cairo drawing API (Gtk+ uses it internally as well)
-			using (Cairo.Context cr = evnt/*Gdk.CairoHelper.Create (evnt.Window)*/) {
+			using (Cairo.Context cr = args.Cr/*Gdk.CairoHelper.Create (evnt.Window)*/) {
 				// Gtk deprecated warning: cr.Color = this.color;
 				// available on Linux GTK# but not yet on Windows (gtk-sharp-2.12.26.msi): cr.SetSourceColor (this.color);
 				// Windows: warning CS0618: 'Cairo.Context.Color' is obsolete: 'Use SetSourceRGBA method'
@@ -81,7 +81,8 @@ namespace GtkWidgets
 			}
 
 			// display child
-			return base.OnDrawn (evnt);
+			//return base.OnDrawn (evnt);
+			args.RetVal = true;
 		}
 	}
 }

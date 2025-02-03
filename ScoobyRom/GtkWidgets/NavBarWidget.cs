@@ -67,6 +67,7 @@ namespace GtkWidgets
 
 			//this.SizeAllocated += new SizeAllocatedHandler(SizeAllocated);
 			//this.ExposeEvent += new ExposeEventHandler(ExposeEvent);
+			this.Drawn += new DrawnHandler(OnDrawn);
 			this.EnterNotifyEvent += new EnterNotifyEventHandler (OnEnterNotifyEvent);
 			this.LeaveNotifyEvent += new LeaveNotifyEventHandler (OnLeaveNotifyEvent);
 //			this.ButtonPressEvent += new ButtonPressEventHandler(ButtonPressEvent);
@@ -244,17 +245,18 @@ namespace GtkWidgets
 
 		#region events
 
-		protected override bool OnDrawn (Cairo.Context ev)
+		void OnDrawn (object o, DrawnArgs args)
 		{
-			base.OnDrawn (ev);
+			//base.Drawn (o, args);
 
 			// Insert drawing code here.
 			//GTK3 migration temporary
 			/*using (Cairo.Context cr = Gdk.CairoHelper.Create (ev.Window)) {
 				DrawEverything (cr);
 			}*/
+			Cairo.Context ev = args.Cr;
 			DrawEverything(ev);
-			return true;
+			args.RetVal = true;
 		}
 
 		protected override void OnSizeAllocated (Gdk.Rectangle allocation)

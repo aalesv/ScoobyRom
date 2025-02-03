@@ -102,6 +102,7 @@ namespace Florence.GtkSharp
 			this.CanFocus = true;
 			//this.SizeAllocated += new SizeAllocatedHandler(PlotWidget_SizeAllocated);
 			//this.ExposeEvent += new ExposeEventHandler(PlotWidget_ExposeEvent);
+			this.Drawn += new DrawnHandler(PlotWidget_Drawn);
 			this.EnterNotifyEvent += new EnterNotifyEventHandler(PlotWidget_EnterNotifyEvent);
 			this.LeaveNotifyEvent += new LeaveNotifyEventHandler(PlotWidget_LeaveNotifyEvent);
 			this.ButtonPressEvent += new ButtonPressEventHandler(PlotWidget_ButtonPressEvent);
@@ -311,7 +312,7 @@ namespace Florence.GtkSharp
 
 		// taken and slightly mofified from NPlotSurface2D (NPlot GTK Widget)
 
-		protected override bool OnDrawn (Cairo.Context args)
+		void PlotWidget_Drawn (object o, DrawnArgs args)
 		{
 			//GTK3 migration temporary
 			/*Gdk.Rectangle area = args.Area;
@@ -337,10 +338,8 @@ namespace Florence.GtkSharp
 					this.InteractivePlotSurface2D.DoDraw (g, bounds);
 				}
 			}*/
-
-
-			return true;
-		}
+			args.RetVal = true;
+}
 
 		protected override void OnSizeAllocated (Gdk.Rectangle allocation)
 		{
