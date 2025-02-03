@@ -84,6 +84,10 @@ namespace GtkWidgets
 
 				BorderWidget widget = new BorderWidget (CalcAxisXColor (val));
 				widget.Add (label);
+				
+				//Debug
+				//Cairo.Color c = CalcAxisXColor(val);
+				//Console.WriteLine($"{val}\t{Math.Round(c.R,2)}\t{Math.Round(c.G,2)}\t{Math.Round(c.B,2)}\t{Math.Round(c.A,2)}");
 
 				table.Attach (widget, DataColLeft, DataColLeft + 1, DataRowTop + i, DataRowTop + 1 + i, AttachOptions.Fill, AttachOptions.Shrink, PadX, PadY);
 			}

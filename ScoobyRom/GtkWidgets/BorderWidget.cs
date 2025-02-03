@@ -52,22 +52,30 @@ namespace GtkWidgets
 
 		public BorderWidget ()
 		{
+			Init();
 		}
 
 		public BorderWidget (Cairo.Color color)
 		{
 			this.color = color;
+			Init();
 		}
 
 		// GLib.Object subclass GtkWidgets.BorderWidget must provide a protected or public
 		// IntPtr ctor to support wrapping of native object handles.
 		public BorderWidget (IntPtr raw) : base(raw)
 		{
+			Init();
 		}
 
-
-		void OnDrawn (object o, DrawnArgs args)
+		protected void Init()
 		{
+			this.Drawn += OnDrawn;
+		}
+
+		public void OnDrawn (object o, DrawnArgs args)//(Cairo.Context c)
+		{
+			//Console.WriteLine($"OnDrawn {o}\t{args}");
 			// draw background fill before child widget so child appears on top
 			// use Cairo drawing API (Gtk+ uses it internally as well)
 			using (Cairo.Context cr = args.Cr/*Gdk.CairoHelper.Create (evnt.Window)*/) {
@@ -76,13 +84,21 @@ namespace GtkWidgets
 				// Windows: warning CS0618: 'Cairo.Context.Color' is obsolete: 'Use SetSourceRGBA method'
 				// solution for now, Gtk# Context method SetSourceColor (Color) does this anyway: NativeMethods.cairo_set_source_rgba (handle, color.R, color.G, color.B, color.A);
 				cr.SetSourceRGBA (this.color.R, this.color.G, this.color.B, this.color.A);
-				cr.Rectangle (this.Allocation.Left, this.Allocation.Top, this.Allocation.Width, this.Allocation.Height);
+				//DrawnArgs.Cr contains area neede to be rapainted only
+				cr.Rectangle (0, 0, this.Allocation.Width, this.Allocation.Height);
 				cr.Fill ();
+				base.OnDrawn(cr);
+
+				//Debug
+				//Cairo.Color c = this.color;
+				//Gdk.Rectangle r = this.Allocation;
+				//Console.WriteLine($"{Math.Round(c.R,2)}\t{Math.Round(c.G,2)}\t{Math.Round(c.B,2)}\t{Math.Round(c.A,2)}");
+				//Console.WriteLine($"{r.Left,2}\t{r.Top,2}\t{r.Width,2}\t{r.Height,2}");
 			}
 
 			// display child
 			//return base.OnDrawn (evnt);
-			args.RetVal = true;
+			//args.RetVal = true;
 		}
 	}
 }
