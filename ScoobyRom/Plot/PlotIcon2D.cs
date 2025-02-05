@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // PlotIcon2D.cs: Create line graph bitmaps using NPlot.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -18,7 +22,7 @@
  * along with ScoobyRom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+using System;
 using Florence;
 
 namespace ScoobyRom
@@ -27,7 +31,7 @@ namespace ScoobyRom
 	/// Creates NPlot 2D graphs without any annotation, useful for icons.
 	/// Methods are not thread safe!
 	/// </summary>
-	public sealed class PlotIcon2D : PlotIconBase
+	public sealed class PlotIcon2D : PlotIconBase, IDisposable
 	{
 		// Default = None
 		const System.Drawing.Drawing2D.SmoothingMode SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -66,6 +70,11 @@ namespace ScoobyRom
 			plotSurface.YAxis1.Hidden = true;
 
 			return DrawAndConvert ();
+		}
+
+		public void Dispose()
+		{
+			pen.Dispose();
 		}
 	}
 }

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // BorderWidget.cs: Gtk# widget that draws a background color and hosts a child widget.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -28,7 +32,7 @@ namespace GtkWidgets
 	{
 		public static bool CairoColorEquals (this Cairo.Color color, Cairo.Color other)
 		{
-			return color.R == other.R && color.G == other.G && color.B == other.B && color.A == other.A;
+			return color.R == other.R && color.G == other.G && color.B == other.B && color.A == other.A; //-V3024
 		}
 	}
 

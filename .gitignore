@@ -32,3 +32,4 @@ TestResult.xml
 
 # service files and dirs
 .vscode
+*.plog

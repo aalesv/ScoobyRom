@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // DataViewBaseGtk.cs: Base class for Gtk.TreeView UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -27,7 +31,7 @@ using Tables.Denso;
 
 namespace ScoobyRom
 {
-	public abstract class DataViewBaseGtk
+	public abstract class DataViewBaseGtk: IDisposable
 	{
 		public event EventHandler<ActionEventArgs> Activated;
 
@@ -120,6 +124,8 @@ namespace ScoobyRom
 		protected void AjustIconCol ()
 		{
 			var col = GetColumn (ColumnNrIcon);
+			if (col == null)
+				return;
 			col.Visible = showIcons;
 
 			if (!showIcons) {
@@ -317,7 +323,7 @@ namespace ScoobyRom
 		{
 			var table = Selected;
 			if (table != null && Activated != null) {
-				Activated (this, new ActionEventArgs (table));
+				Activated?.Invoke (this, new ActionEventArgs (table));
 			}
 		}
 
@@ -428,5 +434,15 @@ namespace ScoobyRom
 		}
 
 		#endregion CreateColumn
+
+		public void Dispose()
+		{
+			treeView.Dispose();
+			cellRendererText.Dispose();
+			cellRendererTextEditable.Dispose();
+			cellRendererToggle.Dispose();
+			cellRendererCombo.Dispose();
+			cellRendererPixbuf.Dispose();
+		}
 	}
 }

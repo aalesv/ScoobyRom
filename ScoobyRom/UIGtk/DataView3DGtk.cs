@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // DataView3DGtk.cs: Gtk.TreeView based UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -317,6 +321,9 @@ namespace ScoobyRom
 				break;
 			case ColumnNr3D.ZPos:
 				col = CreateHexColumn ("ZPos", (int)colNr);
+				break;
+			default:
+				col = null;
 				break;
 			}
 			// only show columns supposed to be displayed

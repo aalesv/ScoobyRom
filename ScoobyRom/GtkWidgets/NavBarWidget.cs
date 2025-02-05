@@ -1,4 +1,8 @@
-﻿using System;
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+using System;
 using Cairo;
 using Gtk;
 using System.Collections.Generic;
@@ -397,6 +401,9 @@ namespace GtkWidgets
 
 		void UpdateViaZoom (double zoomRelative)
 		{
+			if (viewport == null)
+				return;
+			
 			double physicalDelta = WorldToPhysicalX (1) - WorldToPhysicalX (0);
 			// limit excessive zoom-in
 			if (zoomRelative > 1 && physicalDelta > 1) {
@@ -469,10 +476,10 @@ namespace GtkWidgets
 				if (r.RegionType == Util.RegionType.TableSearch) {
 					cr.LineWidth = LineWidth;
 					DrawRangeMarker (cr, r.Pos2, ArrowType.Left);
-					DrawGtkStyleRangeMarker (r.Pos2, ArrowType.Left);
+					DrawGtkStyleRangeMarker (cr, r.Pos2, ArrowType.Left);
 
 					DrawRangeMarker (cr, r.Pos1, ArrowType.Right);
-					DrawGtkStyleRangeMarker (r.Pos1, ArrowType.Right);
+					DrawGtkStyleRangeMarker (cr, r.Pos1, ArrowType.Right);
 					cr.LineWidth = LineWidthRegions;
 				}
 			}
@@ -540,7 +547,7 @@ namespace GtkWidgets
 			cr.Stroke ();
 		}
 
-		void DrawGtkStyleRangeMarker (int pos, ArrowType arrowType)
+		void DrawGtkStyleRangeMarker (Cairo.Context cr, int pos, ArrowType arrowType)
 		{
 			int x = Convert.ToInt32 (WorldToPhysicalX (pos));
 			int height = Convert.ToInt32 (totalRect.Height);
@@ -553,6 +560,9 @@ namespace GtkWidgets
 			//GTK3 migration temporary
 			//Gtk.Style.PaintArrow (this.Style, this.GdkWindow, StateType.Normal, ShadowType.Out, clipping_area, this, "",
 			//	arrowType, false, x, y, dx, height);
+			this.StyleContext.AddClass("arrow");
+			double angle = (Math.PI/2)*(int)arrowType;
+			this.StyleContext.RenderArrow(cr, angle, x, y, height);
 		}
 
 		void DrawRangeMarker (Cairo.Context cr, int pos, ArrowType arrowType)

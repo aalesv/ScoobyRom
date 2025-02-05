@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Main.cs: Program entry point.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -21,6 +25,7 @@
 
 using System;
 using Gtk;
+using System.Runtime.ExceptionServices;
 
 namespace ScoobyRom
 {
@@ -64,7 +69,7 @@ namespace ScoobyRom
 		}
 
 		static internal string LicensePath {
-			get { return System.IO.Path.Combine (MainClass.AssemblyFolder, LicenseFilename); }
+			get { return "";/*System.IO.Path.Combine (MainClass.AssemblyFolder, LicenseFilename);*/ }
 		}
 
 		static internal System.Reflection.Assembly ExecutingAssembly {
@@ -77,7 +82,7 @@ namespace ScoobyRom
 		/// </summary>
 		/// <value>The assembly path.</value>
 		static internal string AssemblyPath {
-			get { return System.Reflection.Assembly.GetExecutingAssembly ().Location; }
+			get { return System.AppContext.BaseDirectory; }
 		}
 
 		/// <summary>
@@ -119,11 +124,29 @@ namespace ScoobyRom
 				Console.Error.WriteLine ("Exception: loading resources");
 			}
 
+			AppDomain currentDomain = AppDomain.CurrentDomain;
+			currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
+
+			AppDomain.CurrentDomain.FirstChanceException += FirstChanceHandler;
+
 			// program arguments: if available, first argument is supposed to be ROM path
 			MainWindow win = new MainWindow (args);
 			win.Show ();
 
 			Application.Run ();
+		}
+
+		static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+		{
+			Exception e = (Exception) args.ExceptionObject;
+			Console.WriteLine("MyHandler caught : " + e.Message);
+			Console.WriteLine("Runtime terminating: {0}", args.IsTerminating);
+		}
+
+		static void FirstChanceHandler(object source, FirstChanceExceptionEventArgs e)
+		{
+			Console.WriteLine("FirstChanceException event raised in {0}: {1}",
+				AppDomain.CurrentDomain.FriendlyName, e.Exception.Message);
 		}
 
 		static void OnUnhandledException (GLib.UnhandledExceptionArgs args)
@@ -138,13 +161,17 @@ namespace ScoobyRom
 
 		static void ErrorMsg (string title, string text)
 		{
-			MessageDialog md = new MessageDialog (null, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, null);
-			md.UseMarkup = false;
-			md.SecondaryUseMarkup = false;
-			md.Title = title;
-			md.Text = text;
-			md.Run ();
-			md.Destroy ();
+			using (MessageDialog md =
+				new MessageDialog (null, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, null))
+			{
+				md.UseMarkup = false;
+				md.SecondaryUseMarkup = false;
+				md.Title = title;
+				md.Text = text;
+				md.Run ();
+				md.Destroy ();
+			}
 		}
+
 	}
 }

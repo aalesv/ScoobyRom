@@ -1,4 +1,8 @@
-﻿using System;
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+using System;
 
 namespace ScoobyRom
 {
@@ -9,7 +13,7 @@ namespace ScoobyRom
 		public SelectDataDialog (Data data)
 		{
 			this.data = data;
-			this.Build ();
+			this.Build (); //-V3068
 			Update ();
 		}
 

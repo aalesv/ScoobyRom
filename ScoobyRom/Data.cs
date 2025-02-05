@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Data.cs: Main model class, should be independent of UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -27,7 +31,7 @@ using Tables.Denso;
 
 namespace ScoobyRom
 {
-	public sealed class Data
+	public sealed class Data: IDisposable
 	{
 		public event EventHandler<EventArgs> RomChanged;
 
@@ -281,17 +285,17 @@ namespace ScoobyRom
 		public void UpdateUI ()
 		{
 			if (RomChanged != null)
-				RomChanged (this, new EventArgs ());
+				RomChanged?.Invoke (this, new EventArgs ());
 			if (ItemsChanged3D != null)
-				ItemsChanged3D (this, new EventArgs ());
+				ItemsChanged3D?.Invoke (this, new EventArgs ());
 			if (ItemsChanged2D != null)
-				ItemsChanged2D (this, new EventArgs ());
+				ItemsChanged2D?.Invoke (this, new EventArgs ());
 		}
 
 		void OnProgressChanged (object sender, System.ComponentModel.ProgressChangedEventArgs e)
 		{
 			if (this.ProgressChanged != null) {
-				this.ProgressChanged (sender, e);
+				this.ProgressChanged?.Invoke (sender, e);
 			}
 		}
 
@@ -352,7 +356,7 @@ namespace ScoobyRom
 		{
 			var all = List2Dand3D ();
 
-			Console.WriteLine ("Checking all tables for shared x-axis:", all.Count);
+			Console.WriteLine ("Checking all tables for shared x-axis: {0}", all.Count);
 			int num = 0;
 			for (int i = 0; i < all.Count; i++) {
 				var t = all [i];
@@ -382,6 +386,11 @@ namespace ScoobyRom
 				d.Add (s, i);
 			}
 			return d;
+		}
+
+		public void Dispose()
+		{
+			rom.Dispose();
 		}
 	}
 }

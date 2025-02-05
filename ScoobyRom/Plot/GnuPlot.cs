@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // GnuPlot.cs: Launch and control gnuplot processes (external plot windows).
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -147,7 +151,7 @@ namespace ScoobyRom
 
 			try {
 				StartProcess (table);
-			} catch (System.ComponentModel.Win32Exception ex) {
+			} catch (System.ComponentModel.Win32Exception ex) { //-V3052
 				// from MSDN
 				// These are the Win32 error code for file not found or access denied.
 				const int ERROR_FILE_NOT_FOUND = 2;

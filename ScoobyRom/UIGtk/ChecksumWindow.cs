@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // ChecksumWindow.cs: Gtk.Window displaying ROM checksums and CVN.
 
 /* Copyright (C) 2011-2017 SubaruDieselCrew
@@ -50,7 +54,7 @@ namespace ScoobyRom
 
 		public ChecksumWindow () : base (Gtk.WindowType.Toplevel)
 		{
-			this.Build ();
+			this.Build (); //-V3068
 			this.Icon = MainClass.AppIcon;
 			Init ();
 		}

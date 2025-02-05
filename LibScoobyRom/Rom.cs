@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Rom.cs: ROM class - read/analyze ROM file content.
 
 /* Copyright (C) 2011-2016 SubaruDieselCrew
@@ -192,7 +196,7 @@ namespace Subaru.File
 			if (ProgressChanged == null)
 				return;
 			else
-				ProgressChanged (this, new ProgressChangedEventArgs (percentDone, null));
+				ProgressChanged?.Invoke (this, new ProgressChangedEventArgs (percentDone, null));
 		}
 
 		/* //not used so far
@@ -310,7 +314,7 @@ namespace Subaru.File
 		/// <param name="align">Alignment in bytes, &gt; 0, i.e. 4 for many 32 bit architectures.</param>
 		public static long NextAlignedPos (long pos, int align)
 		{
-			if (align < 0)
+			if (align <= 0)
 				throw new ArgumentOutOfRangeException ("align");
 			long mod = pos % align;
 			return mod == 0 ? pos : pos - mod + align;
@@ -446,9 +450,7 @@ namespace Subaru.File
 				} catch (Exception) {
 					Console.Error.WriteLine ("Exception: RomDate failed");
 				}
-			}
 
-			if (posDenso > 0) {
 				try {
 					var reflashCounterObj = new ReflashCounter (romType, stream);
 					this.reflashCount = reflashCounterObj.Read ();
@@ -487,7 +489,7 @@ namespace Subaru.File
 
 		#region IDisposable implementation
 
-		void IDisposable.Dispose ()
+		public void Dispose ()
 		{
 			Close ();
 		}

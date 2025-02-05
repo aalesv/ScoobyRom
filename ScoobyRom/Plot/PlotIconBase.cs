@@ -1,4 +1,8 @@
-﻿// PlotIconBase.cs: Common functionality for drawing icons using Florence/NPlot.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// PlotIconBase.cs: Common functionality for drawing icons using Florence/NPlot.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
@@ -24,6 +28,7 @@
 // Tested working fine on Linux x64 and Windows 10 x64.
 //#define BitmapToPixbufConversionRaw
 
+using System;
 using System.Drawing;
 using Florence;
 using Gdk;
@@ -34,7 +39,7 @@ namespace ScoobyRom
 	/// Common functionality for drawing icons using NPlot.
 	/// Methods are not thread safe!
 	/// </summary>
-	public abstract class PlotIconBase
+	public abstract class PlotIconBase: IDisposable
 	{
 		protected readonly RectSizing rectSizing;
 
@@ -217,5 +222,11 @@ namespace ScoobyRom
 		}
 
 		#endif
+
+		public void Dispose()
+		{
+			framePen.Dispose();
+			constDataIcon.Dispose();
+		}
 	}
 }

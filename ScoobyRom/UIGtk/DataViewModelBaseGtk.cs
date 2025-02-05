@@ -1,4 +1,8 @@
-﻿// DataViewModelBaseGtk.cs: Gtk.ITreeModel common functionality for UI
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// DataViewModelBaseGtk.cs: Gtk.ITreeModel common functionality for UI
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
@@ -19,7 +23,7 @@
  */
 
 
-#define UseBackGroundTask
+//#define UseBackGroundTask
 
 using System;
 using System.Threading;

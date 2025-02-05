@@ -1,4 +1,8 @@
-﻿// RectSizing.cs: Rectangle (bitmap) size functionality.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// RectSizing.cs: Rectangle (bitmap) size functionality.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
@@ -53,7 +57,8 @@ namespace ScoobyRom
 		public double ZoomFactor {
 			get { return zoomFactor; }
 			set {
-				if (value > ZoomFactorMax && value < ZoomFactorMin)
+				//if (value > ZoomFactorMax && value < ZoomFactorMin)
+				if (value > ZoomFactorMax || value < ZoomFactorMin)
 					return;
 				zoomFactor = value;
 			}

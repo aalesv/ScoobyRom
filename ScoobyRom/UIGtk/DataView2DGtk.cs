@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // DataView2DGtk.cs: Gtk.TreeView based UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -197,6 +201,9 @@ namespace ScoobyRom
 				break;
 			case ColumnNr2D.YPos:
 				col = CreateHexColumn ("YPos", (int)colNr);
+				break;
+			default:
+				col = null;
 				break;
 			}
 			if (col != null)

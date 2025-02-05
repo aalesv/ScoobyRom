@@ -1,4 +1,8 @@
-﻿// ReflashCounter.cs: Parse reflash counter.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// ReflashCounter.cs: Parse reflash counter.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *

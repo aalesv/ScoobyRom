@@ -1,4 +1,8 @@
-﻿// PlotWidget.cs: Gtk# Widget for Florence graphs.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// PlotWidget.cs: Gtk# Widget for Florence graphs.
 
 /* Copyright (C) 2015 SubaruDieselCrew
  *
@@ -339,7 +343,7 @@ namespace Florence.GtkSharp
 				}
 			}*/
 			args.RetVal = true;
-}
+		}
 
 		protected override void OnSizeAllocated (Gdk.Rectangle allocation)
 		{

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Table3D.cs: Class for 3D table record and its data, Subaru ROM specific.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -236,7 +240,7 @@ namespace Tables.Denso
 		}
 
 		public override bool IsDataConst {
-			get { return this.valuesZmin == this.valuesZmax; }
+			get { return this.valuesZmin == this.valuesZmax; } //-V3024
 		}
 
 		public override string ToString ()

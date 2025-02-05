@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // AssemblyInfo.cs: Assembly metadata. Update version number in here.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -31,3 +35,10 @@ using System.Runtime.CompilerServices;
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
 
+[assembly: AssemblyTitle ("ScoobyRom")]
+[assembly: AssemblyDescription ("Car control unit (ECU, TCU) firmware (ROM) data visualization viewer and metadata editor.\nLicense: GPL v3")]
+[assembly: AssemblyConfiguration ("")]
+[assembly: AssemblyCompany ("")]
+[assembly: AssemblyProduct ("ScoobyRom")]
+[assembly: AssemblyCopyright ("© 2011-2024 SubaruDieselCrew")]
+[assembly: AssemblyVersion ("0.9.3")]

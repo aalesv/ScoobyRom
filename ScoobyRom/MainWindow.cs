@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // MainWindow.cs: Main application window user interface.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -20,7 +24,7 @@
 
 
 // can be useful for testing
-//#define LOAD_SYNC
+#define LOAD_SYNC
 
 using System;
 using System.Collections.Generic;
@@ -70,7 +74,7 @@ public partial class MainWindow : Gtk.Window
 		// Execute Gtk# visual designer generated code (MonoDevelop http://monodevelop.com/ )
 		// Obviously, Visual Studio doesn't have a Gtk# designer, you'll have to code all UI stuff by yourself.
 		// Compiling existing generated UI code within Visual Studio does work however.
-		Build ();
+		Build (); //-V3068
 
 		this.Icon = MainClass.AppIcon;
 
@@ -181,7 +185,7 @@ public partial class MainWindow : Gtk.Window
 		data.ProgressChanged += delegate(object s, System.ComponentModel.ProgressChangedEventArgs pArgs) {
 			Application.Invoke (delegate {
 				//this.progressbar1.Adjustment.Value = pArgs.ProgressPercentage;
-				this.progressbar1.Fraction = pArgs.ProgressPercentage / 100;
+				this.progressbar1.Fraction = (double)(pArgs.ProgressPercentage) / 100;
 			});
 		};
 
@@ -232,7 +236,7 @@ public partial class MainWindow : Gtk.Window
 				string txt = string.Format ("Processing ROM finished in {0} ms.", stopwatch.ElapsedMilliseconds.ToString ());
 				this.progressbar1.Text = txt;
 				this.statusbar1.Push (0, "Updating UI ...");
-				DoPendingEvents ();
+				//DoPendingEvents ();
 				Console.WriteLine (txt);
 
 				PopulateNavBar ();
@@ -409,7 +413,10 @@ public partial class MainWindow : Gtk.Window
 
 	void OnNotebook1SwitchPage (object o, Gtk.SwitchPageArgs args)
 	{
-		iconsAction.Active = CurrentView.ShowIcons;
+		if (CurrentView != null)
+		{
+			iconsAction.Active = CurrentView.ShowIcons;
+		}
 		exportTableAsCSVAction.Sensitive = CurrentUI == ActiveUI.View2D;
 	}
 
@@ -445,12 +452,12 @@ public partial class MainWindow : Gtk.Window
 
 		dialog.Icon = dialog.Logo = MainClass.AppIcon;
 
-		string licensePath = MainClass.LicensePath;
+		/*string licensePath = MainClass.LicensePath;
 		try {
 			dialog.License = System.IO.File.ReadAllText (licensePath);
 		} catch (System.IO.FileNotFoundException) {
 			dialog.License = "Could not load license file '" + licensePath + "'.\nGo to http://www.fsf.org";
-		}
+		}*/
 
 		// default works fine on Linux, need extra work on Windows it seems...
 		//AboutDialog.SetUrlHook (HandleAboutDialogActivateLinkFunc);
@@ -546,8 +553,7 @@ public partial class MainWindow : Gtk.Window
 			ErrorMsg ("Error writing file", ex.Message);
 		} finally {
 			// Don't forget to call Destroy() or the FileChooserDialog window won't get closed.
-			if (fc != null)
-				fc.Destroy ();
+			fc.Destroy ();
 		}
 	}
 
@@ -582,8 +588,7 @@ public partial class MainWindow : Gtk.Window
 		} catch (Exception ex) {
 			ErrorMsg ("Error writing file", ex.Message);
 		} finally {
-			if (fc != null)
-				fc.Destroy ();
+			fc.Destroy ();
 		}
 	}
 
@@ -613,8 +618,7 @@ public partial class MainWindow : Gtk.Window
 		} catch (Exception ex) {
 			ErrorMsg ("Error writing file", ex.Message);
 		} finally {
-			if (fc != null)
-				fc.Destroy ();
+			fc.Destroy ();
 		}
 	}
 
@@ -751,8 +755,7 @@ public partial class MainWindow : Gtk.Window
 			ErrorMsg ("Error", ex.Message);
 		} finally {
 			// Don't forget to call Destroy() or the FileChooserDialog window won't get closed.
-			if (fc != null)
-				fc.Destroy ();
+			fc.Destroy ();
 		}
 	}
 
@@ -829,8 +832,7 @@ public partial class MainWindow : Gtk.Window
 			ErrorMsg ("Error", ex.Message);
 		} finally {
 			// Don't forget to call Destroy() or the FileChooserDialog window won't get closed.
-			if (fc != null)
-				fc.Destroy ();
+			fc.Destroy ();
 		}
 	}
 
@@ -892,12 +894,14 @@ public partial class MainWindow : Gtk.Window
 
 	protected void OnSelectAllActionActivated (object sender, EventArgs e)
 	{
-		CurrentViewModel.ToggleAll (true);
+		if (CurrentViewModel != null)
+			CurrentViewModel.ToggleAll (true);
 	}
 
 	protected void OnSelectNoneActionActivated (object sender, EventArgs e)
 	{
-		CurrentViewModel.ToggleAll (false);
+		if (CurrentViewModel != null)
+			CurrentViewModel.ToggleAll (false);
 	}
 
 [DllImport("kernel32.dll", SetLastError = true)]

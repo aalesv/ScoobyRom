@@ -1,4 +1,8 @@
-﻿// Markup.cs: Helper functions for Pango markup format.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// Markup.cs: Helper functions for Pango markup format.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *

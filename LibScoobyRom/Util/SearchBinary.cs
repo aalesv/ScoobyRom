@@ -1,4 +1,8 @@
-﻿// SearchBinary.cs: Search for bytes, strings etc.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// SearchBinary.cs: Search for bytes, strings etc.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
@@ -107,6 +111,8 @@ namespace Util
 		public static string ExtendFindASCII (Stream stream, Func<char, bool> check)
 		{
 			byte[] result = ExtendFind (stream, b => check ((char)b));
+			if (result == null)
+				throw new ArgumentException("result");
 			return System.Text.Encoding.ASCII.GetString (result);
 		}
 	}

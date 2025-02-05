@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Plot2D.cs: Draw line graph using NPlot interface. Does not depend on UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -18,13 +22,13 @@
  * along with ScoobyRom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+using System;
 using System.Drawing;
 using Florence;
 
 namespace ScoobyRom
 {
-	public sealed class Plot2D
+	public sealed class Plot2D: IDisposable
 	{
 		const float PenWidth = 3f;
 		const int MarkerSize = 6;
@@ -118,6 +122,14 @@ namespace ScoobyRom
 				return string.Empty;
 			else
 				return string.Format ("{0} [{1}]", name, unit);
+		}
+
+		public void Dispose()
+		{
+			titleFont.Dispose();
+			labelFont.Dispose();
+			tickTextFont.Dispose();
+			pen.Dispose();
 		}
 	}
 }

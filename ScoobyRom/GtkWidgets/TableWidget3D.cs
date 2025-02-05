@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // TableWidget3D.cs: Builds a Gtk.Table showing 3D table data values.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew

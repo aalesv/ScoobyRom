@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Plot3D.cs: Draw Florence.ImagePlot (Heatmap) via interface. Does not depend on UI.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew

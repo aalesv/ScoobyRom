@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // Table.cs: Table base class, provides common features.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
@@ -432,6 +436,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeFloat (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			float[] srcFloat = (float[])array;
 			var floats = new float[srcFloat.Length];
 			if (hasMAC) {
@@ -448,6 +454,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeUInt8 (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			byte[] srcUInt8 = (byte[])array;
 			var floats = new float[srcUInt8.Length];
 			if (hasMAC) {
@@ -464,6 +472,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeUInt16 (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			ushort[] src = (ushort[])array;
 			var floats = new float[src.Length];
 			if (hasMAC) {
@@ -480,6 +490,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeInt8 (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			sbyte[] src = (sbyte[])array;
 			var floats = new float[src.Length];
 			if (hasMAC) {
@@ -496,6 +508,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeInt16 (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			short[] src = (short[])array;
 			var floats = new float[src.Length];
 			if (hasMAC) {
@@ -512,6 +526,8 @@ namespace Tables.Denso
 
 		protected float[] ValuesFromTypeUInt32 (Array array)
 		{
+			if (array == null)
+				throw new ArgumentException("array");
 			uint[] src = (uint[])array;
 			var floats = new float[src.Length];
 			if (hasMAC) {

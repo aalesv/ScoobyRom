@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 // TableTypes.cs: Table type parsing and conversion.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew

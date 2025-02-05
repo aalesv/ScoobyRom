@@ -1,4 +1,8 @@
-﻿// TableWidgetBase.cs: Builds a Gtk.Table showing table data values.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+// TableWidgetBase.cs: Builds a Gtk.Table showing table data values.
 
 /* Copyright (C) 2011-2015 SubaruDieselCrew
  *
