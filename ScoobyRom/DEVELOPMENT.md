@@ -4,19 +4,25 @@
 
 Author: <http://subdiesel.wordpress.com/>
 
-Project homepage on *GitHub*: <http://github.com/SubaruDieselCrew/ScoobyRom/>
+Project homepage on *GitHub*: <https://github.com/aalesv/ScoobyRom/>
+
+Project homepage on *GitHub*, deprecated: <http://github.com/SubaruDieselCrew/ScoobyRom/>
 
 # Development
 
 ## CONTENTS
 
-1. Integrated Development Environment (IDE)
-2. Compiling from source without IDE
-3. Miscellaneous
+1. Dependencies
+2. Integrated Development Environment (IDE)
+3. Compiling from source without IDE
 
 ---
 
-## 1) Integrated Development Environment (IDE)
+## 1) Dependencies
+
+GTK ver. 3 x64 runtime must be installed. Gtk# could be installed from NuGet repository, package name `GtkSharp`. Please note that currently **all** Gtk# versions 3.x have a bug that crashes application. More detailed information could be found [here](https://github.com/GtkSharp/GtkSharp/issues/248). Patch is available [here](https://github.com/zii-dmg/GtkSharp/commit/8b7240b4d80e94e2a2d312ca39915f45bad55eac) or [here](https://github.com/aalesv/GtkSharp/tree/develop-toggleref). You should build Gtk# packages yourself or get prebuilt packages [here](https://github.com/aalesv/GtkSharp/releases) and put them into local Nuget repository (out of scope of this document).
+
+## 2) Integrated Development Environment (IDE)
 
 *	*MonoDevelop* (Linux) / *Xamarin Studio* (Windows)
 <http://monodevelop.com/>
@@ -40,47 +46,14 @@ Project homepage on *GitHub*: <http://github.com/SubaruDieselCrew/ScoobyRom/>
 
 ---
 
-## 2) Compiling from source without IDE
+## 3) Compiling from source without IDE
+To build single executable run:
 
-### 2.1) Mono (Linux)
-
-Mono provides `xbuild` command line tool.
-Besides main runtime package (often named `mono`, `mono-runtime` or `mono-core`), on some Linux distributions required additional packages might be called *mono-devel* ([Ubuntu](http://packages.ubuntu.com/search?keywords=mono-devel), [Debian](https://packages.debian.org/search?keywords=mono-devel&searchon=names)) or *mono-dev*.
-
-`xbuild /property:Configuration=Release ScoobyRom.sln`
-
-or
-
-`xbuild /property:Configuration=Debug ScoobyRom.sln`
-
-or just `xbuild` (defaults to debug build, picks solution/project file in current directory)
-
-
-### 2.2) Windows
-
-Like on Linux, just replace `xbuild` with `msbuild`.
-You might need to find and specify exact path of `msbuild.exe`.
-
-If not in path, consider adding tools directory to environment variable `%PATH%`, either temporarily (see below) or in Windows system settings.
-
-Windows 8.1 x64 tested example:
-
-	SET PATH=%PATH%;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
-	
-	msbuild /property:Configuration=Release ScoobyRom.sln
-
----
-
-## 3) Miscellaneous
-
-Created on Linux using free open source software!
+	dotnet publish -p:PublishSingleFile=true --no-self-contained
 
 #### .NET version
 
-Currently the code needs a .NET 4.0 compatible runtime (Windows .NET, Mono etc.).
-Back-porting code and solution/project files to VS 2008 and .NET 3.5 for example is certainly possible.
-Currently there's little code making use of .NET 4.0 features (`Task` is one).
-Minimum .NET version might step up in the future as using newer C# language features makes sense and most users upgrade .NET anyway.
+Currently the code needs a .NET 8.0 runtime.
 
 #### Code Formatting
 MonoDevelop feature *Format Document* has been used, not consistently, as it ain't perfect.
