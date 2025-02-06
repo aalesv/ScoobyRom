@@ -23,7 +23,7 @@
  */
 
 
-//#define UseBackGroundTask
+#define UseBackGroundTask
 
 using System;
 using System.Threading;

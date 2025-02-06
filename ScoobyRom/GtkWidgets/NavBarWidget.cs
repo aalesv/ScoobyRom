@@ -251,16 +251,10 @@ namespace GtkWidgets
 
 		void OnDrawn (object o, DrawnArgs args)
 		{
-			//base.Drawn (o, args);
+			base.OnDrawn (args.Cr);
 
 			// Insert drawing code here.
-			//GTK3 migration temporary
-			/*using (Cairo.Context cr = Gdk.CairoHelper.Create (ev.Window)) {
-				DrawEverything (cr);
-			}*/
-			Cairo.Context ev = args.Cr;
-			DrawEverything(ev);
-			args.RetVal = true;
+			DrawEverything(args.Cr);
 		}
 
 		protected override void OnSizeAllocated (Gdk.Rectangle allocation)

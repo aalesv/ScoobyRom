@@ -24,7 +24,7 @@
 
 
 // can be useful for testing
-#define LOAD_SYNC
+//#define LOAD_SYNC
 
 using System;
 using System.Collections.Generic;
@@ -176,16 +176,9 @@ public partial class MainWindow : Gtk.Window
 
 	void OpenRom (string path)
 	{
-		//GTK3 migration temporary
-		/*this.progressbar1.Adjustment.Lower = 0;
-		this.progressbar1.Adjustment.Upper = 100;
-		//this.progressbar1.Adjustment.StepIncrement = 5;
-		this.progressbar1.Adjustment.Value = 0;*/
-
 		data.ProgressChanged += delegate(object s, System.ComponentModel.ProgressChangedEventArgs pArgs) {
 			Application.Invoke (delegate {
-				//this.progressbar1.Adjustment.Value = pArgs.ProgressPercentage;
-				this.progressbar1.Fraction = (double)(pArgs.ProgressPercentage) / 100;
+				this.progressbar1.Fraction = (double)pArgs.ProgressPercentage;
 			});
 		};
 
@@ -426,6 +419,9 @@ public partial class MainWindow : Gtk.Window
 			return;
 
 		var table = CurrentTable;
+			if (table == null)
+		return;
+
 		if (table is Tables.Denso.Table2D) {
 			Show2D ((Tables.Denso.Table2D)table);
 		} else {
@@ -669,12 +665,11 @@ public partial class MainWindow : Gtk.Window
 
 	void OnNavigationBarActionActivated (object sender, EventArgs e)
 	{
-		//GTK3 migration temporary
-		/*if (navigationBarAction.Active) {
+		if (navigationBarAction.Active) {
 			navScrolledWindow.ShowAll ();
 		} else {
-			navScrolledWindow.HideAll ();
-		}*/
+			navScrolledWindow.Hide ();
+		}
 	}
 
 	// create or close gnuplot window
