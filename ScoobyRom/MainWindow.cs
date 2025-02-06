@@ -509,6 +509,7 @@ public partial class MainWindow : Gtk.Window
 	Gtk.ResponseType DisplaySelectDataDialog (out SelectedChoice choice)
 	{
 		var dialog = new SelectDataDialog (data);
+		dialog.Icon = this.Icon;
 		var response = (Gtk.ResponseType)dialog.Run ();
 		choice = dialog.Choice;
 		dialog.Destroy ();
@@ -519,7 +520,8 @@ public partial class MainWindow : Gtk.Window
 	{
 		SelectedChoice choice;
 		var responseType = DisplaySelectDataDialog (out choice);
-		if (responseType == ResponseType.Cancel)
+		if (responseType == ResponseType.Cancel ||
+			responseType == ResponseType.DeleteEvent)
 			return;
 
 		string pathSuggested = ScoobyRom.Data.PathWithNewExtension (data.Rom.Path, ".RR.xml");

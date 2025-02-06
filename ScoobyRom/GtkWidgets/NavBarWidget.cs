@@ -551,9 +551,6 @@ namespace GtkWidgets
 			if (arrowType == ArrowType.Right)
 				x -= dx;
 
-			//GTK3 migration temporary
-			//Gtk.Style.PaintArrow (this.Style, this.GdkWindow, StateType.Normal, ShadowType.Out, clipping_area, this, "",
-			//	arrowType, false, x, y, dx, height);
 			this.StyleContext.AddClass("arrow");
 			double angle = (Math.PI/2)*(int)arrowType;
 			this.StyleContext.RenderArrow(cr, angle, x, y, height);
