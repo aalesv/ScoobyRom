@@ -150,8 +150,8 @@ namespace ScoobyRom
 			this.radiobuttonAll.Active = true;
 			this.radiobuttonAll.DrawIndicator = true;
 			this.radiobuttonAll.UseUnderline = true;
-			//GTK3 migration temporary
-			//this.radiobuttonAll.Group = new global::GLib.SList (global::System.IntPtr.Zero);
+			//GTK3 manual
+			this.radiobuttonAll.Group = null;
 			this.table1.Add (this.radiobuttonAll);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1 [this.radiobuttonAll]));
 			w10.TopAttach = ((uint)(1));
@@ -187,7 +187,7 @@ namespace ScoobyRom
 			w13.Expand = false;
 			w13.Fill = false;
 			// Internal child ScoobyRom.SelectDataDialog.ActionArea
-			//GTK3 migration temporary
+			//GTK3 migration manual
 			global::Gtk.ButtonBox w14 = this.ActionArea;
 			w14.Name = "dialog1_ActionArea";
 			w14.Spacing = 10;

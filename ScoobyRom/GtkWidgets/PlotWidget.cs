@@ -50,6 +50,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.IO;
 
 using Gtk;
 using Florence;
@@ -342,7 +343,15 @@ namespace Florence.GtkSharp
 					this.InteractivePlotSurface2D.DoDraw (g, bounds);
 				}
 			}*/
-			args.RetVal = true;
+			Cairo.Context cr = args.Cr;
+			//Don't care about single buffering on Windows
+			UpdateCache ();
+			using MemoryStream stream = new MemoryStream ();
+			bitmap_cache.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+			stream.Position = 0;
+			Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(stream);
+			Gdk.CairoHelper.SetSourcePixbuf(cr, pixbuf, 0, 0);
+			cr.Paint();
 		}
 
 		protected override void OnSizeAllocated (Gdk.Rectangle allocation)
