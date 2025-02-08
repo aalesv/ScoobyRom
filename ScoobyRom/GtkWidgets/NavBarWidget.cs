@@ -277,41 +277,27 @@ namespace GtkWidgets
 			//PrintAdjustment (viewport.Hadjustment);
 		}
 
-		//GTK3 migration temporary
-		/*protected override void OnSizeRequested (ref Gtk.Requisition requisition)
+		void InitViewPort()
 		{
-			// GUI designer automatically puts this widget into Viewport when property "Show Scrollbars" is set
-			// necessary for automatic scroll support.
-			// Need additional access in here to improve positioning when zooming.
-			// cannot be initialized in constructor
 			if (viewport == null) {
 				viewport = (Gtk.Viewport)this.Parent;
-
-
 				viewport.AddEvents ((int)Gdk.EventMask.ScrollMask);
 				// not called when scrollbar is being moved
 				//viewport.ScrollAdjustmentsSet += Viewport_ScrollAdjustmentsSet;
 				viewport.ScrollEvent += Viewport_ScrollEvent;
-				;
-
 			}
-			//var vr = viewport.Allocation;
-			//Console.WriteLine ("Viewport size request Width={0} Height={1}", vr.Width, vr.Height);
-
-			// Calculate desired size here.
-			requisition.Width = minWidth;
-			requisition.Height = minHeight;
-			//Console.WriteLine ("OnSizeRequested -> Requisition: {0}x{1}", requisition.Width, requisition.Height);
-		}*/
-
-		//GTK3 migration temporary
+		}
 		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
 		{
+			// cannot be initialized in constructor
+			InitViewPort ();
 			natural_height = min_height = minHeight;
 		}
 
 		protected override void OnGetPreferredWidth (out int min_width, out int natural_width)
 		{
+			// cannot be initialized in constructor
+			InitViewPort ();
 			natural_width = min_width = minWidth;
 		}
 
