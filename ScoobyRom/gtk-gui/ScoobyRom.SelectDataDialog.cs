@@ -187,7 +187,7 @@ namespace ScoobyRom
 			w13.Expand = false;
 			w13.Fill = false;
 			// Internal child ScoobyRom.SelectDataDialog.ActionArea
-			//GTK3 migration manual
+			//GTK3 manual
 			global::Gtk.ButtonBox w14 = this.ActionArea;
 			w14.Name = "dialog1_ActionArea";
 			w14.Spacing = 10;

@@ -338,8 +338,6 @@ namespace GtkWidgets
 		void OnKeyPressEvent (object o, KeyPressEventArgs args)
 		{
 			//Console.WriteLine ($"OnKeyPressEvent {args.Event.Key}");
-			const Gdk.ModifierType modifier = Gdk.ModifierType.Button1Mask;
-
 			Gdk.Key key = args.Event.Key;
 			if (key == Gdk.Key.Control_L || key == Gdk.Key.Control_R) {
 				ctrlKeyIsPressed = true;
@@ -437,19 +435,18 @@ namespace GtkWidgets
 
 			//PrintAdjustment (viewport.Hadjustment);
 
-			if (viewport != null) {
-				// .Upper changes automatically
-				// .Upper will be changed during actual resize
-				// New Hadustment.Value must bet set after resizing
-				// in the Hadjusment Changed event
-				// Xnew is new position after resizing
-				var Xnew = X*zoomRelative;
-				// To keep view point under cursor, new position must
-				// be shifted by the same number of pixels as old
-				var hadjValNew = Xnew - Xnew/zoom;
-				//Custom extension method, see ScoobyRom.Extensions
-				viewport.Hadjustment.SetValue(NewHadjustmentValuePropertyName, hadjValNew);
-			}
+			// .Upper changes automatically
+			// .Upper will be changed during actual resize
+			// New Hadustment.Value must bet set after resizing
+			// in the Hadjusment Changed event
+			// Xnew is new position after resizing
+			var Xnew = X*zoomRelative;
+			// To keep view point under cursor, new position must
+			// be shifted by the same number of pixels as old
+			var hadjValNew = Xnew - Xnew/zoom;
+			//Custom extension method, see ScoobyRom.Extensions
+			viewport.Hadjustment.SetValue(NewHadjustmentValuePropertyName, hadjValNew);
+			
 			QueueResize ();
 			//Console.WriteLine ("zoom={0}", zoom.ToString ());
 		}
