@@ -40,5 +40,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("ScoobyRom")]
-[assembly: AssemblyCopyright ("© 2011-2024 SubaruDieselCrew")]
+[assembly: AssemblyCopyright ("© 2011-2025 SubaruDieselCrew")]
 [assembly: AssemblyVersion ("0.9.3")]

@@ -4,7 +4,7 @@
 
 // TextEcuDef.cs: Export data in text format.
 
-/* Copyright (C) 2011-2024 SubaruDieselCrew
+/* Copyright (C) 2011-2025 SubaruDieselCrew
  *
  * This file is part of ScoobyRom.
  *
