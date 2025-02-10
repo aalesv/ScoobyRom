@@ -6,6 +6,7 @@ using System;
 using Cairo;
 using Gtk;
 using System.Collections.Generic;
+using ScoobyRom.Extensions;
 
 namespace GtkWidgets
 {
@@ -51,6 +52,11 @@ namespace GtkWidgets
 		// red brown
 		Cairo.Color ColorMarkedPos = new Cairo.Color (165 / 255.0, 42 / 255.0, 42 / 255.0, 0.9);
 
+		//Extended property name
+		const string NewHadjustmentValuePropertyName = "new Hadjustment.Value";
+
+		bool ctrlKeyIsPressed = false;
+
 		#region boilerplate constructors
 
 		public NavBarWidget () : base ()
@@ -79,7 +85,7 @@ namespace GtkWidgets
 //			this.ButtonReleaseEvent += new ButtonReleaseEventHandler(ButtonReleaseEvent);
 //			this.ScrollEvent += new ScrollEventHandler(OnScrollEvent);
 			this.KeyPressEvent += new KeyPressEventHandler (OnKeyPressEvent);
-//			this.KeyReleaseEvent += new KeyReleaseEventHandler (OnKeyReleaseEvent);
+			this.KeyReleaseEvent += new KeyReleaseEventHandler (OnKeyReleaseEvent);
 
 			// Subscribe to DrawingArea mouse movement and button press events.
 			// Enter and Leave notification is necessary to make ToolTips work.
@@ -208,6 +214,10 @@ namespace GtkWidgets
 			get { return markedPositions != null && markedPositions.Length > 0; }
 		}
 
+		bool IsEmpty {
+			get { return lastPos <= 0; }
+		}
+
 		// !!! Stetic designer seems to take every public setter,
 		// generating code to set default value (0) in Build ().
 
@@ -281,12 +291,16 @@ namespace GtkWidgets
 		{
 			if (viewport == null) {
 				viewport = (Gtk.Viewport)this.Parent;
-				viewport.AddEvents ((int)Gdk.EventMask.ScrollMask);
+				viewport.AddEvents ((int)
+									(Gdk.EventMask.ScrollMask
+									|Gdk.EventMask.ButtonPressMask));
 				// not called when scrollbar is being moved
 				//viewport.ScrollAdjustmentsSet += Viewport_ScrollAdjustmentsSet;
 				viewport.ScrollEvent += Viewport_ScrollEvent;
+				viewport.Hadjustment.Changed += Viewport_HadjustmentChangedEvent;
 			}
 		}
+
 		protected override void OnGetPreferredHeight (out int min_height, out int natural_height)
 		{
 			// cannot be initialized in constructor
@@ -303,9 +317,19 @@ namespace GtkWidgets
 
 		void Viewport_ScrollEvent (object o, ScrollEventArgs args)
 		{
+			//Console.WriteLine($"Viewport_ScrollEvent dir={args.Event.Direction} CTRL={ctrlKeyIsPressed}");
+			if (IsEmpty)
+				return;
+			Gdk.ScrollDirection direction = args.Event.Direction;
 			// need to update when scrolled and pointer still at same position, otherwise would display outdated info
 			// HACK
-			ClearTooltip ();
+			if (direction == Gdk.ScrollDirection.Up && ctrlKeyIsPressed) {
+				ClearTooltip ();
+				ZoomIn ();
+			} else if (direction == Gdk.ScrollDirection.Down && ctrlKeyIsPressed) {
+				ClearTooltip ();
+				ZoomOut ();
+			}
 			// TODO update tooltip after scroll event
 			// ok but not accurate, probably called before scroll is done
 			//UpdateToolTip ();
@@ -313,31 +337,25 @@ namespace GtkWidgets
 
 		void OnKeyPressEvent (object o, KeyPressEventArgs args)
 		{
-			//Console.WriteLine ("OnKeyPressEvent");
+			//Console.WriteLine ($"OnKeyPressEvent {args.Event.Key}");
 			const Gdk.ModifierType modifier = Gdk.ModifierType.Button1Mask;
 
 			Gdk.Key key = args.Event.Key;
-			if ((args.Event.State & modifier) != 0) {
-				if (key == Gdk.Key.Key_0 || key == Gdk.Key.KP_0) {
-					ZoomReset ();
-					args.RetVal = true;     // Prevents further key processing
-					return;
-				} else if (key == Gdk.Key.plus || key == Gdk.Key.KP_Add) {
-					ZoomIn ();
-					args.RetVal = true;
-					return;
-				} else if (key == Gdk.Key.minus || key == Gdk.Key.KP_Subtract) {
-					ZoomOut ();
-					args.RetVal = true;
-					return;
-				}
+			if (key == Gdk.Key.Control_L || key == Gdk.Key.Control_R) {
+				ctrlKeyIsPressed = true;
+				args.RetVal = true;
 			}
 		}
 
-		//		void OnKeyReleaseEvent (object o, KeyReleaseEventArgs args)
-		//		{
-		//			args.RetVal = true;
-		//		}
+		void OnKeyReleaseEvent (object o, KeyReleaseEventArgs args)
+		{
+			//Console.WriteLine ($"OnKeyReleaseEvent {args.Event.Key}");
+			Gdk.Key key = args.Event.Key;
+			if (key == Gdk.Key.Control_L || key == Gdk.Key.Control_R) {
+				ctrlKeyIsPressed = false;
+				args.RetVal = true;
+			}
+		}
 
 		void OnLeaveNotifyEvent (object o, LeaveNotifyEventArgs args)
 		{
@@ -370,6 +388,17 @@ namespace GtkWidgets
 			UpdateToolTip ();
 		}
 
+		void Viewport_HadjustmentChangedEvent(object o, EventArgs args)
+		{
+			//Custom extension method, see ScoobyRom.Extensions
+			double? v = (double?)o.GetValue(NewHadjustmentValuePropertyName);
+			if (v != null)
+			{
+				viewport.Hadjustment.Value = v.Value;
+				o.RemoveValue(NewHadjustmentValuePropertyName);
+			}
+		}
+
 		#endregion events
 
 		void UpdatePosRelated ()
@@ -390,8 +419,9 @@ namespace GtkWidgets
 				return;
 			}
 
-			// remember current left world pos for scrollbar pos
-			double worldXleft = PhysicalToWorldX (viewport.Hadjustment.Value);
+			// remember current pos
+			int X;
+			GetPointer (out X, out _);
 
 			double savePosFactor = posFactor;
 			posFactor *= zoomRelative;
@@ -407,15 +437,18 @@ namespace GtkWidgets
 
 			//PrintAdjustment (viewport.Hadjustment);
 
-
 			if (viewport != null) {
-				//zoomRelative = zoomRelative > 1 ? 1.1 * zoomRelative : zoomRelative * 1.1;
-
-				// otherwise Adjustment.Value would remain constant
-				//viewport.Hadjustment.Value *= zoomRelative;
 				// .Upper changes automatically
-
-				viewport.Hadjustment.Value = WorldToPhysicalX (worldXleft);
+				// .Upper will be changed during actual resize
+				// New Hadustment.Value must bet set after resizing
+				// in the Hadjusment Changed event
+				// Xnew is new position after resizing
+				var Xnew = X*zoomRelative;
+				// To keep view point under cursor, new position must
+				// be shifted by the same number of pixels as old
+				var hadjValNew = Xnew - Xnew/zoom;
+				//Custom extension method, see ScoobyRom.Extensions
+				viewport.Hadjustment.SetValue(NewHadjustmentValuePropertyName, hadjValNew);
 			}
 			QueueResize ();
 			//Console.WriteLine ("zoom={0}", zoom.ToString ());
