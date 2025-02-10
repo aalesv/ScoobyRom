@@ -740,7 +740,7 @@ Often these are valid tables and are actually used in ROM firmware logic.
 
 	*	Visualises ROM content using different colours: table records, axes and values.
 	*	Slim horizontal bars (dark yellow) on top of the content-rectangle indicate **checksummed regions**.
-	*	Currently **zoom** in/out/reset works by placing mouse pointer somewhere over NavBar area, holding (left) mouse button #1 depressed and pressing key (`+`), (`-`) or (`0`), respectively.
+	*	Zoom in / zoom out by CTRL key + mouse wheel.
 	*	Tooltip shows ROM position (hex, byte size, decimal) as well as content type at mouse pointer. You should use this to find out the mapping between colour and content.
 	*	Since ScoobyRom deals with tables mostly, unlike *[IDA](http://www.hex-rays.com/products/ida/)* for example, it does not scan for other content types like code, empty space, misc data etc.
 	*	Vertical markers (red) show currently viewed table record and corresponding locations of axes and values. These markers only update using visualise-action.
