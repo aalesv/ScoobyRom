@@ -384,8 +384,15 @@ namespace ScoobyRom.DataFile
 			unit = null;
 
 			XAttribute attr = el.Attribute (X_address);
+			try{
 			if (attr != null)
 				address = ParseHexInt ((string)attr, attr);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Cannot parse {attr} for {el.Attribute (X_name)}");
+				throw new Exception("Parsing failure");
+			}
 			name = (string)el.Attribute (X_name);
 			unit = (string)el.Attribute (X_unit);
 		}
